@@ -396,81 +396,16 @@ document.querySelectorAll('.article-card:not(.featured)').forEach(card => {
   });
 });
 
-// ─── AUDIO (Web Speech API — browser TTS) ───
-let currentUtterance = null;
-let currentBtn = null;
-
-function buildEssayText(card) {
-  const num  = card.querySelector('.card-num')?.textContent.trim() ?? '';
-  const title = card.querySelector('.card-title')?.textContent.trim() ?? '';
-  const excerpt = card.querySelector('.card-excerpt')?.textContent.trim() ?? '';
-  return `${num}. ${title}. ${excerpt}`;
-}
-
-function stopSpeaking() {
-  window.speechSynthesis.cancel();
-  if (currentBtn) {
-    currentBtn.classList.remove('playing');
-    currentBtn.querySelector('.audio-icon').textContent = '🔊';
-    currentBtn.querySelector('.audio-label').textContent = 'Listen';
-    currentBtn = null;
-  }
-  currentUtterance = null;
-}
-
+// ─── AUDIO HINT (front page — passive indicator, full listen is inside article) ───
 document.querySelectorAll('.article-card').forEach(card => {
-  // Inject audio button into card footer
   const footer = card.querySelector('.card-footer');
   if (!footer) return;
-  const btn = document.createElement('button');
-  btn.className = 'card-audio-btn';
-  btn.setAttribute('aria-label', 'Listen to this essay');
-  btn.innerHTML = '<span class="audio-icon">🔊</span><span class="audio-label">Listen</span>';
-  footer.appendChild(btn);
-
-  btn.addEventListener('click', e => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (!window.speechSynthesis) {
-      alert('Your browser does not support text-to-speech.');
-      return;
-    }
-
-    // If this card is already playing — stop
-    if (currentBtn === btn && window.speechSynthesis.speaking) {
-      stopSpeaking();
-      return;
-    }
-
-    // Stop any current speech
-    stopSpeaking();
-
-    const text = buildEssayText(card);
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.rate  = 0.95;
-    utterance.pitch = 1;
-    utterance.lang  = card.dataset.category === 'marathi' ? 'mr-IN' : 'en-US';
-
-    utterance.onend = () => {
-      if (currentBtn === btn) stopSpeaking();
-    };
-    utterance.onerror = () => {
-      if (currentBtn === btn) stopSpeaking();
-    };
-
-    currentUtterance = utterance;
-    currentBtn = btn;
-    btn.classList.add('playing');
-    btn.querySelector('.audio-icon').textContent = '⏸';
-    btn.querySelector('.audio-label').textContent = 'Stop';
-
-    window.speechSynthesis.speak(utterance);
-  });
+  const hint = document.createElement('span');
+  hint.className   = 'card-audio-hint';
+  hint.textContent = '🎧 audio';
+  hint.title       = 'Open the essay to listen to the full audio';
+  footer.appendChild(hint);
 });
-
-// Stop speech when navigating away
-window.addEventListener('beforeunload', () => window.speechSynthesis?.cancel());
 </script>
 </body>
 </html>
