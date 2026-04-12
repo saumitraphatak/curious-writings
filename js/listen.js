@@ -1,60 +1,41 @@
 // listen.js — Full essay text-to-speech for article pages
 //
-// Fixes for known Chrome Web Speech API bugs:
-//   1. "Silent speak" bug — cancel() + 100ms delay before speak() clears stale state
-//   2. Chrome ~15s stall bug — heartbeat pause/resume every 14s keeps it alive
-//   3. Utterance GC bug — module-level reference keeps utterance alive
+// Root cause of "speak() but no audio" in Chrome:
+//   SpeechSynthesisUtterance created as a local variable gets garbage-collected
+//   by V8 before the browser's TTS engine can speak it. Fix: always keep a
+//   module-level reference (currentUtterance) so GC never touches it.
 
 (function () {
   'use strict';
 
-  // ── Voice priority list ────────────────────────────────────────────────────
-  const VOICE_EN = [
-    'Google US English',
-    'Microsoft Aria Online (Natural)',
-    'Microsoft Jenny Online (Natural)',
-    'Microsoft Steffan Online (Natural)',
-    'Microsoft Natasha Online (Natural)',
-    'Samantha',
-    'Karen',
-    'Daniel',
-    'Google UK English Female',
-    'Google UK English Male',
-  ];
-  const VOICE_HI = ['Google हिन्दी', 'Lekha', 'Veena'];
+  // ── Module-level reference — CRITICAL: prevents Chrome GC killing the utterance
+  let currentUtterance = null;
+  let state     = 'stopped';
+  let btn       = null;
+  let heartbeat = null;
 
+  // ── Voice priority ─────────────────────────────────────────────────────────
   function getBestVoice(lang) {
-    const voices   = window.speechSynthesis.getVoices();
-    const priority = (lang === 'mr-IN' || lang === 'hi-IN') ? VOICE_HI : VOICE_EN;
-    for (const name of priority) {
+    const voices = window.speechSynthesis.getVoices();
+    const prefer = (lang === 'mr-IN' || lang === 'hi-IN')
+      ? ['Google हिन्दी', 'Lekha', 'Veena']
+      : [
+          'Google US English',
+          'Microsoft Aria Online (Natural)',
+          'Microsoft Jenny Online (Natural)',
+          'Samantha',
+          'Karen',
+          'Daniel',
+          'Google UK English Female',
+        ];
+    for (const name of prefer) {
       const v = voices.find(v => v.name.includes(name));
       if (v) return v;
     }
     const root = lang.split('-')[0];
     return voices.find(v => v.lang.startsWith(root))
         || voices.find(v => v.lang.startsWith('en'))
-        || voices[0]
         || null;
-  }
-
-  // ── Split text into ≤150-char chunks at sentence boundaries ───────────────
-  // Chrome silently drops long utterances. Short chunks survive reliably.
-  function splitChunks(text, max) {
-    max = max || 150;
-    // Split on sentence-ending punctuation followed by space/end
-    const sentences = text.split(/(?<=[.!?\u0964\u0965])\s+/);
-    const chunks = [];
-    let buf = '';
-    for (const s of sentences) {
-      if (buf.length + s.length > max && buf.length > 0) {
-        chunks.push(buf.trim());
-        buf = s;
-      } else {
-        buf = buf ? buf + ' ' + s : s;
-      }
-    }
-    if (buf.trim()) chunks.push(buf.trim());
-    return chunks.filter(c => c.length > 0);
   }
 
   // ── Build essay text ───────────────────────────────────────────────────────
@@ -62,28 +43,18 @@
     const h1   = document.querySelector('h1');
     const body = document.querySelector('.article-body');
     if (!body) return null;
-    // Strip emoji — some TTS engines say "emoji" aloud
-    const clean = s => s.replace(/[\u{1F000}-\u{1FFFF}\u{2600}-\u{27BF}✈️🚀🎓]/gu, '').trim();
-    const title = h1 ? clean(h1.textContent) + '. ' : '';
-    return title + clean(body.innerText);
+    const strip = s => s.replace(/[^\S\n]+/g, ' ')
+                        .replace(/[\u{1F000}-\u{1FFFF}\u{2600}-\u{27BF}]/gu, '')
+                        .trim();
+    return (h1 ? strip(h1.textContent) + '. ' : '') + strip(body.innerText);
   }
 
   function detectLang() {
     const tag = document.querySelector('.category-tag');
-    if (tag && tag.classList.contains('cat-marathi')) return 'mr-IN';
-    return 'en-US';
+    return (tag && tag.classList.contains('cat-marathi')) ? 'mr-IN' : 'en-US';
   }
 
-  // ── State ──────────────────────────────────────────────────────────────────
-  let chunks    = [];
-  let chunkIdx  = 0;
-  let voice     = null;
-  let lang      = 'en-US';
-  let state     = 'stopped';
-  let btn       = null;
-  let heartbeat = null;
-
-  // ── Heartbeat — keeps Chrome alive past its ~15s stall bug ────────────────
+  // ── Heartbeat: keeps Chrome alive past its ~15s stall ─────────────────────
   function startHeartbeat() {
     stopHeartbeat();
     heartbeat = setInterval(() => {
@@ -91,12 +62,9 @@
         window.speechSynthesis.pause();
         window.speechSynthesis.resume();
       }
-    }, 14000);
+    }, 13000);
   }
-  function stopHeartbeat() {
-    clearInterval(heartbeat);
-    heartbeat = null;
-  }
+  function stopHeartbeat() { clearInterval(heartbeat); heartbeat = null; }
 
   // ── Button state ──────────────────────────────────────────────────────────
   function setBtn(s) {
@@ -122,58 +90,47 @@
   function stop() {
     stopHeartbeat();
     window.speechSynthesis.cancel();
-    chunks   = [];
-    chunkIdx = 0;
+    currentUtterance = null;
     setBtn('stopped');
   }
 
-  // ── Speak one chunk, chain to next on end ─────────────────────────────────
-  function speakChunk(idx) {
-    if (idx >= chunks.length) { stop(); return; }
+  // ── Core: create utterance, assign to MODULE-LEVEL var, then speak ─────────
+  function createAndSpeak(text, lang, voice) {
+    // Assign to module-level var FIRST — this is what prevents Chrome GC
+    currentUtterance          = new SpeechSynthesisUtterance(text);
+    currentUtterance.lang     = lang;
+    currentUtterance.rate     = 0.9;
+    currentUtterance.pitch    = 1.0;
+    if (voice) currentUtterance.voice = voice;
 
-    const u   = new SpeechSynthesisUtterance(chunks[idx]);
-    u.lang    = lang;
-    u.rate    = 0.9;
-    u.pitch   = 1.0;
-    if (voice) u.voice = voice;
-
-    u.onend = () => {
-      if (state === 'playing') speakChunk(idx + 1);
+    currentUtterance.onend = () => {
+      stopHeartbeat();
+      setBtn('stopped');
     };
-    u.onerror = e => {
-      // 'interrupted' / 'canceled' fire on manual cancel — not an error
+    currentUtterance.onerror = e => {
       if (e.error !== 'interrupted' && e.error !== 'canceled') {
-        console.warn('TTS error:', e.error);
         stop();
       }
     };
 
-    window.speechSynthesis.speak(u);
+    window.speechSynthesis.speak(currentUtterance);
+    startHeartbeat();
   }
 
-  // ── Begin reading ─────────────────────────────────────────────────────────
+  // ── Begin reading ──────────────────────────────────────────────────────────
   function beginReading() {
     const text = getEssayText();
-    if (!text) {
-      console.warn('listen.js: no .article-body found on this page');
-      return;
-    }
+    if (!text) { console.warn('listen.js: no .article-body found'); return; }
 
-    lang     = detectLang();
-    chunks   = splitChunks(text);
-    chunkIdx = 0;
+    const lang = detectLang();
+
+    // Cancel any lingering speech first
+    window.speechSynthesis.cancel();
 
     function go() {
-      voice = getBestVoice(lang);
-
-      // Fix 1: always cancel first, then wait one tick so Chrome fully clears
-      window.speechSynthesis.cancel();
-      setTimeout(() => {
-        if (chunks.length === 0) return;
-        setBtn('playing');
-        startHeartbeat();
-        speakChunk(0);
-      }, 120);
+      const voice = getBestVoice(lang);
+      setBtn('playing');
+      createAndSpeak(text, lang, voice);
     }
 
     const voices = window.speechSynthesis.getVoices();
@@ -184,17 +141,22 @@
         window.speechSynthesis.onvoiceschanged = null;
         go();
       };
+      // Fallback: if onvoiceschanged never fires (some browsers), speak anyway
+      setTimeout(() => {
+        if (state === 'stopped') return; // go() already ran
+        go();
+      }, 2000);
     }
   }
 
-  // ── Inject button into article header ─────────────────────────────────────
+  // ── Inject button ──────────────────────────────────────────────────────────
   function inject() {
     const header = document.querySelector('.article-page-header');
     if (!header || !document.querySelector('.article-body')) return;
 
     btn = document.createElement('button');
     btn.className = 'ls-btn';
-    btn.title     = 'Listen to the full essay (uses browser text-to-speech)';
+    btn.title     = 'Listen to the full essay using your browser\'s text-to-speech';
     btn.innerHTML = '<span class="ls-icon">🎧</span><span class="ls-label">Listen to essay</span>';
 
     const divider = header.querySelector('.article-divider');
@@ -206,7 +168,6 @@
         alert('Your browser does not support text-to-speech.\nTry Chrome, Edge, or Safari.');
         return;
       }
-
       if (state === 'stopped') {
         beginReading();
       } else if (state === 'playing') {
