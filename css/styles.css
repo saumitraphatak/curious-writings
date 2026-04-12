@@ -637,6 +637,40 @@ img { max-width: 100%; display: block; }
   user-select: none;
 }
 
+/* ─── ARTICLE LISTEN CONTROLS ─── */
+.ls-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.4rem;
+  flex-wrap: wrap;
+}
+.ls-voice-select {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-mid);
+  border-radius: 99px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.75rem;
+  font-family: var(--ff-sans);
+  cursor: pointer;
+  max-width: 200px;
+  transition: border-color 0.2s;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238A8A82'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.7rem center;
+  padding-right: 1.8rem;
+}
+.ls-voice-select:focus { outline: none; border-color: var(--accent); }
+.ls-voice-select:hover { border-color: var(--accent); }
+.ls-voice-label {
+  font-size: 0.7rem;
+  color: var(--text-light);
+  font-style: italic;
+  white-space: nowrap;
+}
 /* ─── ARTICLE LISTEN BUTTON (inside essay pages) ─── */
 .ls-btn {
   display: inline-flex;
