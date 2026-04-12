@@ -1,0 +1,31 @@
+# Curious Writings
+
+> Personal essays by Saumitra Phatak — a Mumbaikar navigating a Physics PhD at Purdue University; 12 essays written across 4+ years on life abroad, quantum research, identity, travel between Mumbai and Indiana, and the human experience of being genuinely curious.
+
+**Live site:** https://saumitraphatak.github.io/curious-writings/
+**Author:** Saumitra Phatak — Physics PhD candidate, Purdue University
+**Source:** https://github.com/saumitraphatak/curious-writings
+**Languages:** English, Marathi, Hindi
+**Tech:** Pure static HTML/CSS — no frameworks, no build tools
+
+These essays are not academic writing or advice content. They are honest first-person attempts to make sense of leaving Mumbai, running quantum physics experiments at 3 AM, missing home while being fascinated by where you are, and growing up during a PhD. Three essays are in Marathi because some things don't translate.
+
+## Essays
+
+- [India-USA Travel Experience](https://saumitraphatak.github.io/curious-writings/articles/01-india-usa-travel.html): The Mumbai–Delhi–Chicago flight, arriving in America, the "wuhuu, I landed" feeling wearing off, leaving a bag on the shuttle home. Essay #01 — English · Aug 2021
+- [Two Weeks in the USA](https://saumitraphatak.github.io/curious-writings/articles/02-usa-two-weeks.html): First impressions of American life — grocery stores, highways, weather, loneliness, wonder. Essay #02 — English
+- [Trip Back Home](https://saumitraphatak.github.io/curious-writings/articles/03-trip-back-home.html): Returning to Mumbai after months abroad — what feels different, what feels more itself. Essay #03 — English
+- [I'm Confused](https://saumitraphatak.github.io/curious-writings/articles/04-im-confused.html): A philosophical reckoning with uncertainty — in research, in identity, in what to want from life. Essay #04 — English
+- [Fall 2022](https://saumitraphatak.github.io/curious-writings/articles/05-fall-2022.html): A semester in the lab — experiments, setbacks, camaraderie, the rhythm of PhD life in autumn Indiana. Essay #05 — English · 2022
+- [India Trip 2022](https://saumitraphatak.github.io/curious-writings/articles/06-india-trip-2022.html): Going home after a year — the gap between the person who left and the city that stayed. Essay #06 — English · 2022
+- [Summer 2023](https://saumitraphatak.github.io/curious-writings/articles/07-summer-2023.html): Conference travel, lab breakthroughs, friendships that form between experiments. Essay #07 — English · 2023
+- [Achievements](https://saumitraphatak.github.io/curious-writings/articles/08-achievements.html): On what counts as progress — and what gets lost in the measuring. Essay #08 — English
+- [Summer 2024](https://saumitraphatak.github.io/curious-writings/articles/09-summer-2024.html): Mid-PhD reflections — on research momentum, identity drift, and learning to be patient with yourself. Essay #09 — English · 2024
+- [एक उन्हाळी सहल](https://saumitraphatak.github.io/curious-writings/articles/10-ek-unhali-sahal.html): A summer excursion — in Marathi, because some memories want their mother tongue. Essay #10 — Marathi
+- [Life & Quantum Physics](https://saumitraphatak.github.io/curious-writings/articles/11-life-quantum-physics.html): Where quantum mechanics and lived experience rhyme — superposition, measurement, collapse. Essay #11 — English
+- [The Boston Experience](https://saumitraphatak.github.io/curious-writings/articles/12-boston-experience.html): A trip to Boston — the city's history, the physics conference, the feeling of being a tourist in your own field. Essay #12 — English
+
+## Optional
+
+- [Essay index / home](https://saumitraphatak.github.io/curious-writings/curious-writings.html): Full card grid with filter by category (The Journey, PhD Life, Travel & Home, Philosophy, Personal Growth, Science, मराठी)
+- [Source code](https://github.com/saumitraphatak/curious-writings)

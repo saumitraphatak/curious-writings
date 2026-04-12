@@ -1,0 +1,202 @@
+# Curious Writings — Full Content
+
+**Live site:** https://saumitraphatak.github.io/curious-writings/
+**Author:** Saumitra Phatak — Physics PhD candidate, Purdue University, Hood Lab
+**Source:** https://github.com/saumitraphatak/curious-writings
+**Purpose:** Personal essay blog. 12 essays across 4+ years, written by a Mumbaikar doing a Physics PhD at Purdue University. On life abroad, quantum research, identity, travel between Mumbai and West Lafayette (Indiana), and what it means to be genuinely curious about being alive.
+
+---
+
+## ABOUT THE WRITING
+
+Not academic. Not advice. Not content.
+
+These are essays in the original sense — *attempts*. Attempts to make sense of what it feels like to leave Mumbai, to run experiments on ultracold atoms at 3 AM, to miss home while being fascinated by where you are, to grow up while doing a PhD. They are written in the voice you'd use with a close friend: direct, a little searching, occasionally funny.
+
+Three essays are in Marathi — because some things don't translate.
+
+---
+
+## TECH STACK
+
+- Pure static HTML/CSS — minimal JS (filter bar only)
+- No npm, no build tools, no frameworks
+- Google Fonts via CDN
+- Main homepage: `curious-writings.html` (NOT index.html — that's just a redirect)
+- Essay pages: `articles/NN-slug.html`
+
+---
+
+## FILE STRUCTURE
+
+```
+curious-writings/
+├── curious-writings.html   # Homepage (card grid, filter bar)
+├── index.html              # Redirect only
+├── css/styles.css          # All styles
+├── articles/               # 12 essay HTML files
+│   ├── 01-india-usa-travel.html
+│   ├── 02-usa-two-weeks.html
+│   ├── 03-trip-back-home.html
+│   ├── 04-im-confused.html
+│   ├── 05-fall-2022.html
+│   ├── 06-india-trip-2022.html
+│   ├── 07-summer-2023.html
+│   ├── 08-achievements.html
+│   ├── 09-summer-2024.html
+│   ├── 10-ek-unhali-sahal.html
+│   ├── 11-life-quantum-physics.html
+│   └── 12-boston-experience.html
+├── robots.txt
+└── sitemap.xml
+```
+
+---
+
+## HOMEPAGE (curious-writings.html)
+
+### Layout
+- `<header>` — site logo "Curious Writings", link to curious96.com
+- `.hero` — tagline "Meaningful yet unnecessary conversations"; 3 stats: 12 Essays, 4+ Years, 3 Languages
+- `.filter-bar` — filter buttons by category (All, The Journey, PhD Life, Travel & Home, Philosophy, Personal Growth, Science, मराठी)
+- `.articles-grid` — essay cards; JS shows/hides on filter click
+
+### Hero Stats
+- 12 Essays
+- 4+ Years of writing
+- 3 Languages (English, Marathi, Hindi)
+
+### Filter Categories
+```
+all        → show all 12
+journey    → "The Journey" essays (arriving in USA, early adjustment)
+phd        → PhD Life essays (lab seasons, research milestones)
+travel     → Travel & Home (going back to Mumbai, exploring US cities)
+philosophy → Philosophical essays (confusion, meaning, uncertainty)
+growth     → Personal Growth (achievements, self-reflection)
+science    → Science writing (life/quantum physics connection)
+marathi    → Essays in Marathi
+```
+
+---
+
+## ALL 12 ESSAYS — FULL DESCRIPTIONS
+
+### Essay #01 — India-USA Travel Experience
+**File:** articles/01-india-usa-travel.html
+**Category:** The Journey | **Language:** English | **Year:** Aug 2021
+**Excerpt:** The nervous Mumbai–Delhi–Chicago flight. Music as the great distractor. The "wuhuu, landed in USA" feeling that wore off by the time he was eating at McDonald's and gossiping about Indian stand-up comedy — only to leave a bag on the shuttle home.
+
+**Themes:** First flight to USA, culture shock, arrival anxiety, early adjustment, the gap between imagination and reality. The essay captures that specific feeling of being simultaneously thrilled and overwhelmed. The McDonald's scene grounds the grand arrival in the ordinary.
+
+---
+
+### Essay #02 — Two Weeks in the USA
+**File:** articles/02-usa-two-weeks.html
+**Category:** The Journey | **Language:** English
+**Themes:** First impressions of American daily life — the scale of grocery stores, highways, the quietness of suburbs compared to Mumbai. Loneliness punctuated by wonder. Learning to cook alone. The novelty of having a car culture vs. Mumbai's chaos of local trains.
+
+---
+
+### Essay #03 — Trip Back Home
+**File:** articles/03-trip-back-home.html
+**Category:** Travel & Home | **Language:** English
+**Themes:** Returning to Mumbai after months away. The airport reunion. Discovering which parts of home feel exactly right and which feel slightly off — not because Mumbai changed, but because the observer did. The strange reverse culture shock of knowing your city too well to see it clearly.
+
+---
+
+### Essay #04 — I'm Confused
+**File:** articles/04-im-confused.html
+**Category:** Philosophy | **Language:** English
+**Themes:** A philosophical essay on uncertainty. Confusion as an honest state — in research (when experiments don't work), in identity (who am I becoming?), in desire (what do I actually want?). Argues that confusion is more honest than premature clarity.
+
+---
+
+### Essay #05 — Fall 2022
+**File:** articles/05-fall-2022.html
+**Category:** PhD Life | **Language:** English | **Year:** 2022
+**Themes:** A semester in the Hood Lab — the rhythm of experimental physics (setup, failure, calibration, try again). Fall leaves in West Lafayette. The strange beauty of working at 2 AM in a dark lab. Lab friendships formed over broken equipment. The sense that you're building toward something you can't yet see.
+
+---
+
+### Essay #06 — India Trip 2022
+**File:** articles/06-india-trip-2022.html
+**Category:** Travel & Home | **Language:** English | **Year:** 2022
+**Themes:** Going home after a year of PhD. The gap between who left and who returned. Mumbai as both deeply familiar and subtly foreign to the returning traveler. Family dynamics. The feeling of being between two worlds — not fully here, not fully there. Monsoon memories.
+
+---
+
+### Essay #07 — Summer 2023
+**File:** articles/07-summer-2023.html
+**Category:** PhD Life | **Language:** English | **Year:** 2023
+**Themes:** Conference travel (APS, DAMOP), meeting the global AMO physics community. Lab progress — that moment when an experiment starts working. Friendships between researchers. Summer in Indiana: the contrast of lush green cornfields and the contained world of a physics lab.
+
+---
+
+### Essay #08 — Achievements
+**File:** articles/08-achievements.html
+**Category:** Personal Growth | **Language:** English
+**Themes:** What counts as achievement in a PhD? The tension between measurable progress (papers, data, presentations) and the slower, harder-to-name growth (becoming a scientist, becoming yourself). On learning to celebrate small wins. On what gets lost when you only measure by output.
+
+---
+
+### Essay #09 — Summer 2024
+**File:** articles/09-summer-2024.html
+**Category:** PhD Life | **Language:** English | **Year:** 2024
+**Themes:** Mid-PhD reflections — the "valley" that many PhD students hit around year 3-4. Research momentum, identity drift, learning patience with yourself and your work. On the difference between what you imagined a PhD would feel like and what it actually is. On staying curious when you're tired.
+
+---
+
+### Essay #10 — एक उन्हाळी सहल (A Summer Excursion)
+**File:** articles/10-ek-unhali-sahal.html
+**Category:** Travel & Home | **Language:** Marathi
+**About:** Written entirely in Marathi. A summer trip — possibly to a hill station or back to Maharashtra. Chosen language because the memory or experience feels rooted in Marathi — the mother tongue carrying things English cannot.
+
+---
+
+### Essay #11 — Life & Quantum Physics
+**File:** articles/11-life-quantum-physics.html
+**Category:** Science | **Language:** English
+**Themes:** Where quantum mechanics and lived experience genuinely rhyme. Superposition as a metaphor for holding multiple identities simultaneously (Indian / American; physicist / writer; home / abroad). Measurement and collapse as analogous to the moment of commitment or decision. Wave-particle duality as the both/and of human nature. Not pop-science — written by someone who actually works with quantum systems.
+
+---
+
+### Essay #12 — The Boston Experience
+**File:** articles/12-boston-experience.html
+**Category:** Travel & Home | **Language:** English
+**Themes:** A trip to Boston — the city's dense layering of American history (Freedom Trail, Faneuil Hall, MIT, Harvard). A physics conference in the city. The feeling of being both insider (scientist) and outsider (Indian, tourist) in the same space. Reflections on American intellectualism and its relationship to Indian academic culture.
+
+---
+
+## DESIGN SYSTEM
+
+### Typography
+- Serif-forward, prioritizes long-form readability
+- Body: Georgia or system serif as fallback
+- Display/headings: Google Fonts (Playfair Display or similar)
+- Long line lengths allowed on desktop for immersive reading
+
+### Colors (clean, light aesthetic)
+- Background: near-white / paper
+- Text: near-black / ink
+- Category tags: color-coded per category
+  - journey: blue
+  - phd: purple
+  - travel: green
+  - philosophy: amber
+  - growth: teal
+  - science: indigo
+  - marathi: saffron
+
+### Components
+- `.article-card` + `.article-card.featured` (essay #01 is featured/larger)
+- `.card-meta`: category tag + read time + essay number
+- `.card-excerpt`: 2-sentence teaser
+- `.card-read-link`: "Read essay →"
+- `.card-lang`: "English · Month Year" (or "Marathi · —")
+- `.filter-btn.active` for selected filter
+- `.reveal` class for scroll-in animation
+
+---
+
+*Generated 2026-04-12 for LLM/RAG ingestion.*
