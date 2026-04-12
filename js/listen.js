@@ -1,113 +1,105 @@
 (function () {
-  var utt          = null;
+  var utt           = null;
   var selectedVoice = null;
+  var voiceList     = [];
 
-  // Voices that sound noticeably more human — shown at top of list
   var PREFER = [
     'Google US English',
     'Microsoft Aria Online (Natural)',
     'Microsoft Jenny Online (Natural)',
     'Microsoft Steffan Online (Natural)',
     'Microsoft Natasha Online (Natural)',
-    'Samantha',   // macOS — very natural
-    'Karen',      // macOS AU
-    'Daniel',     // macOS UK
+    'Samantha',
+    'Karen',
+    'Daniel',
     'Google UK English Female',
     'Google UK English Male',
   ];
 
-  function sortedVoices() {
+  function loadVoices(select) {
     var all = window.speechSynthesis.getVoices();
-    // English voices only (or Hindi/Marathi if on that page)
-    var eng = all.filter(function (v) {
-      return v.lang.startsWith('en') || v.lang.startsWith('hi') || v.lang.startsWith('mr');
-    });
-    // Put preferred voices first
-    var top = [], rest = [];
-    eng.forEach(function (v) {
-      var isPref = PREFER.some(function (name) { return v.name.includes(name); });
-      if (isPref) top.push(v); else rest.push(v);
-    });
-    return top.concat(rest);
-  }
+    if (!all.length) return false;
 
-  function buildVoiceSelect(select) {
-    var voices = sortedVoices();
-    if (!voices.length) return;
+    // English + Hindi/Marathi only, preferred voices first
+    var top = [], rest = [];
+    all.filter(function (v) {
+      return v.lang.startsWith('en') || v.lang.startsWith('hi') || v.lang.startsWith('mr');
+    }).forEach(function (v) {
+      var pref = PREFER.some(function (n) { return v.name.includes(n); });
+      if (pref) top.push(v); else rest.push(v);
+    });
+    voiceList = top.concat(rest);
 
     select.innerHTML = '';
-    voices.forEach(function (v, i) {
-      var opt      = document.createElement('option');
-      opt.value    = i;
-      var label    = v.name.replace(' Online (Natural)', ' ✦').replace(' Online', '');
-      opt.textContent = label + ' (' + v.lang + ')';
-      opt.dataset.idx = i;
-      if (!selectedVoice && PREFER.some(function (n) { return v.name.includes(n); })) {
-        opt.selected  = true;
-        selectedVoice = v;
-      }
+    voiceList.forEach(function (v, i) {
+      var opt         = document.createElement('option');
+      opt.value       = i;
+      var label       = v.name.replace(' Online (Natural)', ' ✦').replace(' Online', '');
+      opt.textContent = label + '  [' + v.lang + ']';
       select.appendChild(opt);
     });
-    // If no preferred voice was found, default to first
-    if (!selectedVoice && voices.length) selectedVoice = voices[0];
 
-    select.addEventListener('change', function () {
-      selectedVoice = voices[parseInt(select.value)];
-    });
+    // Auto-select first preferred voice
+    selectedVoice = voiceList[0] || null;
+    return true;
   }
 
-  function getEssayText() {
-    var h1   = document.querySelector('h1');
+  function getBodyText() {
     var body = document.querySelector('.article-body');
-    if (!body) return null;
-    return (h1 ? h1.innerText + '. ' : '') + body.innerText;
+    return body ? body.innerText.trim() : null;
   }
 
   function inject() {
     var header = document.querySelector('.article-page-header');
-    var body   = document.querySelector('.article-body');
-    if (!header || !body) return;
+    if (!header || !document.querySelector('.article-body')) return;
 
-    // Wrapper row
-    var row         = document.createElement('div');
-    row.className   = 'ls-controls';
+    // ── controls row ──
+    var row       = document.createElement('div');
+    row.className = 'ls-controls';
 
-    // Play/stop button
-    var btn         = document.createElement('button');
-    btn.className   = 'ls-btn';
-    btn.innerHTML   = '<span class="ls-icon">🎧</span><span class="ls-label">Listen to essay</span>';
+    var btn       = document.createElement('button');
+    btn.className = 'ls-btn';
+    btn.innerHTML = '<span class="ls-icon">🎧</span><span class="ls-label">Listen to essay</span>';
 
-    // Voice picker
-    var select      = document.createElement('select');
+    var label       = document.createElement('span');
+    label.className = 'ls-voice-label';
+    label.textContent = 'Voice:';
+
+    var select       = document.createElement('select');
     select.className = 'ls-voice-select';
-    select.title    = 'Choose a voice';
+    select.title     = 'Choose a voice';
 
-    var hint        = document.createElement('span');
-    hint.className  = 'ls-voice-label';
-    hint.textContent = 'voice';
+    // placeholder until voices load
+    var placeholder       = document.createElement('option');
+    placeholder.textContent = 'Loading voices…';
+    placeholder.disabled  = true;
+    placeholder.selected  = true;
+    select.appendChild(placeholder);
+
+    select.addEventListener('change', function () {
+      selectedVoice = voiceList[parseInt(select.value)] || null;
+    });
 
     row.appendChild(btn);
-    row.appendChild(hint);
+    row.appendChild(label);
     row.appendChild(select);
 
     var divider = header.querySelector('.article-divider');
     if (divider) header.insertBefore(row, divider);
     else         header.appendChild(row);
 
-    // Populate voices (may need to wait for async load)
-    function tryPopulate() {
-      var voices = window.speechSynthesis.getVoices();
-      if (voices.length) {
-        buildVoiceSelect(select);
-      } else {
-        window.speechSynthesis.onvoiceschanged = function () {
-          window.speechSynthesis.onvoiceschanged = null;
-          buildVoiceSelect(select);
-        };
-      }
+    // ── voice loading — retry until voices appear ──
+    // Chrome fires onvoiceschanged early; Safari loads sync; Firefox may delay.
+    // Polling every 200ms for up to 3s catches all cases.
+    var attempts = 0;
+    function tryLoad() {
+      if (loadVoices(select)) return; // success
+      if (++attempts < 15) setTimeout(tryLoad, 200);
     }
-    tryPopulate();
+    window.speechSynthesis.onvoiceschanged = function () { loadVoices(select); };
+    tryLoad();
 
+    // ── button ──
     function resetBtn() {
       btn.innerHTML = '<span class="ls-icon">🎧</span><span class="ls-label">Listen to essay</span>';
       btn.classList.remove('ls-active');
@@ -126,14 +118,14 @@
         return;
       }
 
-      var text = getEssayText();
+      var text = getBodyText();
       if (!text) return;
 
-      utt           = new SpeechSynthesisUtterance(text);
-      utt.rate      = 0.92;
+      utt        = new SpeechSynthesisUtterance(text);
+      utt.rate   = 0.92;
       if (selectedVoice) utt.voice = selectedVoice;
 
-      utt.onend = function () { resetBtn(); utt = null; };
+      utt.onend  = function () { resetBtn(); utt = null; };
       utt.onerror = function () { resetBtn(); utt = null; };
 
       window.speechSynthesis.speak(utt);
