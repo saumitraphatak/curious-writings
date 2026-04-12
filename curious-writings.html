@@ -26,11 +26,14 @@
 </head>
 <body>
 
+<div class="progress-bar" id="progressBar"></div>
+
 <header class="site-header">
   <div class="inner">
     <a href="curious-writings.html" class="site-logo">Curious <span>Writings</span></a>
     <nav class="site-nav">
       <a href="https://www.curious96.com" target="_blank" rel="noopener">curious96.com</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">☀</button>
     </nav>
   </div>
 </header>
@@ -278,24 +281,196 @@
 </footer>
 
 <script>
-// Filter
+// ─── DARK MODE ───
+(function() {
+  const saved = localStorage.getItem('cw-theme');
+  if (saved === 'dark') document.documentElement.dataset.theme = 'dark';
+})();
+
+const toggleBtn = document.getElementById('themeToggle');
+toggleBtn.textContent = document.documentElement.dataset.theme === 'dark' ? '☾' : '☀';
+toggleBtn.addEventListener('click', () => {
+  const isDark = document.documentElement.dataset.theme === 'dark';
+  document.documentElement.dataset.theme = isDark ? '' : 'dark';
+  toggleBtn.textContent = isDark ? '☀' : '☾';
+  localStorage.setItem('cw-theme', isDark ? '' : 'dark');
+});
+
+// ─── PROGRESS BAR FALLBACK (for browsers without scroll-timeline) ───
+if (!CSS.supports('animation-timeline', 'scroll()')) {
+  const bar = document.getElementById('progressBar');
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.transform = `scaleX(${total > 0 ? scrolled / total : 0})`;
+  }, { passive: true });
+}
+
+// ─── STAGGER DELAYS for reveal cards ───
+document.querySelectorAll('.article-card.reveal').forEach((card, i) => {
+  card.style.setProperty('--stagger', i % 6);
+});
+
+// ─── SCROLL REVEAL ───
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.07 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ─── FILTER with fade-animation ───
+function doFilter(filter) {
+  const cards = [...document.querySelectorAll('.article-card')];
+  const hidden = new Set();
+
+  // Phase 1: fade out cards that won't be shown
+  cards.forEach(card => {
+    const show = filter === 'all' || card.dataset.category === filter;
+    if (!show) {
+      hidden.add(card);
+      card.style.opacity = '0';
+      card.style.transform = 'scale(0.97) translateY(-6px)';
+    }
+  });
+
+  // Phase 2: after fade, hide them and reveal remaining
+  setTimeout(() => {
+    cards.forEach((card, i) => {
+      if (hidden.has(card)) {
+        card.style.display = 'none';
+        card.style.opacity = '';
+        card.style.transform = '';
+      } else {
+        if (card.style.display === 'none') {
+          card.style.display = '';
+          card.style.opacity = '0';
+          card.style.transform = 'scale(0.97) translateY(10px)';
+          // stagger visible cards
+          const delay = [...cards.filter(c => !hidden.has(c))].indexOf(card) * 40;
+          setTimeout(() => {
+            card.style.transition = 'opacity 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease';
+            card.style.opacity = '1';
+            card.style.transform = '';
+            setTimeout(() => card.style.transition = '', 350);
+          }, delay);
+        } else {
+          card.style.opacity = '1';
+          card.style.transform = '';
+        }
+      }
+    });
+  }, 220);
+}
+
+// Override card transition for filter animation
+document.querySelectorAll('.article-card').forEach(card => {
+  card.style.transition = 'opacity 0.22s ease, transform 0.22s ease, box-shadow 0.3s ease';
+});
+
 document.querySelectorAll('.filter-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    const filter = btn.dataset.filter;
-    document.querySelectorAll('.article-card').forEach(card => {
-      const show = filter === 'all' || card.dataset.category === filter;
-      card.style.display = show ? '' : 'none';
-    });
+    if (document.startViewTransition) {
+      document.startViewTransition(() => doFilter(btn.dataset.filter));
+    } else {
+      doFilter(btn.dataset.filter);
+    }
   });
 });
 
-// Scroll reveal
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.1 });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+// ─── 3D CARD TILT ───
+document.querySelectorAll('.article-card:not(.featured)').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width  - 0.5;
+    const y = (e.clientY - rect.top)  / rect.height - 0.5;
+    card.style.transition = 'box-shadow 0.15s ease';
+    card.style.transform = `perspective(700px) rotateY(${x * 7}deg) rotateX(${-y * 7}deg) translateY(-4px)`;
+    card.style.boxShadow = `${-x * 12}px ${-y * 12 + 16}px 40px rgba(0,0,0,0.12)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transition = 'transform 0.45s ease, box-shadow 0.3s ease';
+    card.style.transform = '';
+    card.style.boxShadow = '';
+    setTimeout(() => { card.style.transition = ''; }, 460);
+  });
+});
+
+// ─── AUDIO (Web Speech API — browser TTS) ───
+let currentUtterance = null;
+let currentBtn = null;
+
+function buildEssayText(card) {
+  const num  = card.querySelector('.card-num')?.textContent.trim() ?? '';
+  const title = card.querySelector('.card-title')?.textContent.trim() ?? '';
+  const excerpt = card.querySelector('.card-excerpt')?.textContent.trim() ?? '';
+  return `${num}. ${title}. ${excerpt}`;
+}
+
+function stopSpeaking() {
+  window.speechSynthesis.cancel();
+  if (currentBtn) {
+    currentBtn.classList.remove('playing');
+    currentBtn.querySelector('.audio-icon').textContent = '🔊';
+    currentBtn.querySelector('.audio-label').textContent = 'Listen';
+    currentBtn = null;
+  }
+  currentUtterance = null;
+}
+
+document.querySelectorAll('.article-card').forEach(card => {
+  // Inject audio button into card footer
+  const footer = card.querySelector('.card-footer');
+  if (!footer) return;
+  const btn = document.createElement('button');
+  btn.className = 'card-audio-btn';
+  btn.setAttribute('aria-label', 'Listen to this essay');
+  btn.innerHTML = '<span class="audio-icon">🔊</span><span class="audio-label">Listen</span>';
+  footer.appendChild(btn);
+
+  btn.addEventListener('click', e => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!window.speechSynthesis) {
+      alert('Your browser does not support text-to-speech.');
+      return;
+    }
+
+    // If this card is already playing — stop
+    if (currentBtn === btn && window.speechSynthesis.speaking) {
+      stopSpeaking();
+      return;
+    }
+
+    // Stop any current speech
+    stopSpeaking();
+
+    const text = buildEssayText(card);
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.rate  = 0.95;
+    utterance.pitch = 1;
+    utterance.lang  = card.dataset.category === 'marathi' ? 'mr-IN' : 'en-US';
+
+    utterance.onend = () => {
+      if (currentBtn === btn) stopSpeaking();
+    };
+    utterance.onerror = () => {
+      if (currentBtn === btn) stopSpeaking();
+    };
+
+    currentUtterance = utterance;
+    currentBtn = btn;
+    btn.classList.add('playing');
+    btn.querySelector('.audio-icon').textContent = '⏸';
+    btn.querySelector('.audio-label').textContent = 'Stop';
+
+    window.speechSynthesis.speak(utterance);
+  });
+});
+
+// Stop speech when navigating away
+window.addEventListener('beforeunload', () => window.speechSynthesis?.cancel());
 </script>
 </body>
 </html>
