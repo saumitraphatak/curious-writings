@@ -40,28 +40,71 @@
 
 <main>
   <section class="hero">
-    <p class="hero-eyebrow">Personal Essays</p>
-    <h1>Meaningful yet unnecessary conversations</h1>
-    <p class="hero-sub">A collection of personal essays by Saumitra Phatak — a Mumbaikar navigating a Physics PhD at Purdue, one honest reflection at a time.</p>
-    <div class="hero-meta">
-      <div class="hero-stat"><strong>12</strong><small>Essays</small></div>
-      <div class="hero-stat"><strong>4+</strong><small>Years of writing</small></div>
-      <div class="hero-stat"><strong>3</strong><small>Languages</small></div>
+    <div class="hero-copy">
+      <p class="hero-eyebrow">Personal Essays</p>
+      <h1>Meaningful yet unnecessary conversations</h1>
+      <p class="hero-sub">A collection of personal essays by Saumitra Phatak — a Mumbaikar navigating a Physics PhD at Purdue, one honest reflection at a time.</p>
+      <div class="hero-actions">
+        <a class="hero-btn primary" href="#essays">Browse essays</a>
+        <a class="hero-btn" href="#start-here">Start here</a>
+      </div>
+    </div>
+    <aside class="hero-note" aria-label="About this collection">
+      <p class="note-kicker">What this is</p>
+      <p>Not advice. Not content. Just attempts to catch the strange middle of life abroad: missing home, learning science, making friends, becoming an adult slowly and somewhat suspiciously.</p>
+      <div class="hero-meta">
+        <div class="hero-stat"><strong>12</strong><small>Essays</small></div>
+        <div class="hero-stat"><strong>4+</strong><small>Years</small></div>
+        <div class="hero-stat"><strong>3</strong><small>Languages</small></div>
+      </div>
+    </aside>
+  </section>
+
+  <section class="reader-paths" id="start-here" aria-label="Suggested reading paths">
+    <div class="section-intro">
+      <p class="hero-eyebrow">Start here</p>
+      <h2>Three ways into the archive</h2>
+    </div>
+    <div class="path-grid">
+      <a class="path-card" href="articles/01-india-usa-travel.html">
+        <span class="path-num">01</span>
+        <h3>Leaving home</h3>
+        <p>Begin with the first flight, the first two weeks in America, and the first trip back home.</p>
+        <small>Start with India-USA Travel Experience</small>
+      </a>
+      <a class="path-card" href="articles/05-fall-2022.html">
+        <span class="path-num">02</span>
+        <h3>PhD seasons</h3>
+        <p>Read the graduate-school arc: lab life, research pressure, seasons, publications, and small wins.</p>
+        <small>Start with Fall 2022</small>
+      </a>
+      <a class="path-card" href="articles/11-life-quantum-physics.html">
+        <span class="path-num">03</span>
+        <h3>Science as metaphor</h3>
+        <p>The essays where physics leaks into ordinary life: confusion, observation, entanglement, collapse.</p>
+        <small>Start with Life &amp; Quantum Physics</small>
+      </a>
     </div>
   </section>
 
   <hr class="divider">
 
-  <div class="filter-bar">
-    <span class="filter-label">Filter:</span>
-    <button class="filter-btn active" data-filter="all">All</button>
-    <button class="filter-btn" data-filter="journey">The Journey</button>
-    <button class="filter-btn" data-filter="phd">PhD Life</button>
-    <button class="filter-btn" data-filter="travel">Travel & Home</button>
-    <button class="filter-btn" data-filter="philosophy">Philosophy</button>
-    <button class="filter-btn" data-filter="growth">Personal Growth</button>
-    <button class="filter-btn" data-filter="science">Science</button>
-    <button class="filter-btn" data-filter="marathi">मराठी</button>
+  <div class="filter-shell" id="essays">
+    <div class="search-wrap">
+      <span class="search-icon">⌕</span>
+      <input id="essaySearch" type="search" placeholder="Search essays by theme, title, year..." autocomplete="off" aria-label="Search essays">
+    </div>
+    <div class="filter-bar">
+      <span class="filter-label">Filter:</span>
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="journey">The Journey</button>
+      <button class="filter-btn" data-filter="phd">PhD Life</button>
+      <button class="filter-btn" data-filter="travel">Travel & Home</button>
+      <button class="filter-btn" data-filter="philosophy">Philosophy</button>
+      <button class="filter-btn" data-filter="growth">Personal Growth</button>
+      <button class="filter-btn" data-filter="science">Science</button>
+      <button class="filter-btn" data-filter="marathi">मराठी</button>
+    </div>
   </div>
 
   <section class="articles-section">
@@ -272,6 +315,7 @@
       </article>
 
     </div>
+    <p class="empty-state" id="emptyState" hidden>No essays match that filter yet. Try a softer search term, the archive is moody but not infinite.</p>
   </section>
 </main>
 
@@ -317,14 +361,25 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.07 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// ─── FILTER with fade-animation ───
-function doFilter(filter) {
+// ─── SEARCH + FILTER with fade-animation ───
+let activeFilter = 'all';
+let activeQuery = '';
+
+function cardMatches(card) {
+  const filterMatch = activeFilter === 'all' || card.dataset.category === activeFilter;
+  const haystack = card.textContent.toLowerCase();
+  const queryMatch = !activeQuery || haystack.includes(activeQuery);
+  return filterMatch && queryMatch;
+}
+
+function doFilter() {
   const cards = [...document.querySelectorAll('.article-card')];
+  const emptyState = document.getElementById('emptyState');
   const hidden = new Set();
 
   // Phase 1: fade out cards that won't be shown
   cards.forEach(card => {
-    const show = filter === 'all' || card.dataset.category === filter;
+    const show = cardMatches(card);
     if (!show) {
       hidden.add(card);
       card.style.opacity = '0';
@@ -358,6 +413,7 @@ function doFilter(filter) {
         }
       }
     });
+    if (emptyState) emptyState.hidden = hidden.size !== cards.length;
   }, 220);
 }
 
@@ -370,30 +426,19 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
+    activeFilter = btn.dataset.filter;
     if (document.startViewTransition) {
-      document.startViewTransition(() => doFilter(btn.dataset.filter));
+      document.startViewTransition(() => doFilter());
     } else {
-      doFilter(btn.dataset.filter);
+      doFilter();
     }
   });
 });
 
-// ─── 3D CARD TILT ───
-document.querySelectorAll('.article-card:not(.featured)').forEach(card => {
-  card.addEventListener('mousemove', e => {
-    const rect = card.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width  - 0.5;
-    const y = (e.clientY - rect.top)  / rect.height - 0.5;
-    card.style.transition = 'box-shadow 0.15s ease';
-    card.style.transform = `perspective(700px) rotateY(${x * 7}deg) rotateX(${-y * 7}deg) translateY(-4px)`;
-    card.style.boxShadow = `${-x * 12}px ${-y * 12 + 16}px 40px rgba(0,0,0,0.12)`;
-  });
-  card.addEventListener('mouseleave', () => {
-    card.style.transition = 'transform 0.45s ease, box-shadow 0.3s ease';
-    card.style.transform = '';
-    card.style.boxShadow = '';
-    setTimeout(() => { card.style.transition = ''; }, 460);
-  });
+const searchInput = document.getElementById('essaySearch');
+searchInput?.addEventListener('input', () => {
+  activeQuery = searchInput.value.trim().toLowerCase();
+  doFilter();
 });
 
 // ─── AUDIO HINT (front page — passive indicator, full listen is inside article) ───
