@@ -1,6 +1,6 @@
 # Curious Writings
 
-> Personal essays by Saumitra Phatak — a Mumbaikar navigating a Physics PhD at Purdue University; 12 essays written across 4+ years on life abroad, quantum research, identity, travel between Mumbai and Indiana, and the human experience of being genuinely curious.
+> Personal essays and a memoir by Saumitra Phatak — a Mumbaikar navigating a Physics PhD at Purdue University; 13 essays written across 4+ years on life abroad, quantum research, identity, travel between Mumbai and Indiana, and the human experience of being genuinely curious.
 
 **Live site:** https://saumitraphatak.github.io/curious-writings/
 **Author:** Saumitra Phatak — Physics PhD candidate, Purdue University
@@ -9,6 +9,10 @@
 **Tech:** Pure static HTML/CSS — no frameworks, no build tools
 
 These essays are not academic writing or advice content. They are honest first-person attempts to make sense of leaving Mumbai, running quantum physics experiments at 3 AM, missing home while being fascinated by where you are, and growing up during a PhD. Three essays are in Marathi because some things don't translate.
+
+## Book
+
+- [The Distance Between Two Homes](https://saumitraphatak.github.io/curious-writings/assets/book/the-distance-between-two-homes.pdf): *A PhD, Two Homes, and Too Many Questions*. A 58-page memoir reshaped from the essay archive, following the journey from Mumbai to Indiana and Boston through science, family, goodbyes, and becoming.
 
 ## Essays
 

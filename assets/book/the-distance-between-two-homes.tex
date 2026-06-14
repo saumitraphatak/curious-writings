@@ -1,0 +1,1360 @@
+% ════════════════════════════════════════════════════════════════════
+%  THE DISTANCE BETWEEN TWO HOMES
+%  A Physicist's Education — in Experiments, Goodbyes, and Becoming
+%  Saumitra S. Phatak
+%
+%  Latest voice-restored edition — synthesised from three earlier drafts:
+%   · "The Only Constant"            (voice, refrains, the Marathi lines)
+%   · "The Distance Between Two Homes" (title, the Two-Homes theme,
+%                                       Survival-Mode pulled forward,
+%                                       drop caps + accent, "Latest Version")
+%   · "Change Is the Only Constant"  (tighter prose, chapter titles,
+%                                       pull-quotes, the quantum interlude,
+%                                       About the Author)
+%
+%  The memoir structure and book design are retained while the prose is
+%  restored toward the conversational voice of the Curious Writings essays.
+%
+%  Self-contained. Compile twice for the contents:
+%      pdflatex "The Distance Between Two Homes - Latest.tex"
+%      pdflatex "The Distance Between Two Homes - Latest.tex"
+% ════════════════════════════════════════════════════════════════════
+
+\documentclass[11pt,twoside,openany]{book}
+
+% ── Encoding ──────────────────────────────────────────────────────────
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+% ── Typography: Palatino body, Helvetica display ──────────────────────
+\usepackage{mathpazo}
+\usepackage[scaled=0.92]{helvet}
+\usepackage{microtype}
+\usepackage{setspace}\setstretch{1.10}
+
+% ── Trim: 5.5 x 8.5 in (intimate trade/memoir size) ───────────────────
+\usepackage[paperwidth=5.5in,paperheight=8.5in,
+            top=0.8in,bottom=0.8in,inner=0.85in,outer=0.62in,
+            headsep=12pt,footskip=24pt]{geometry}
+
+% ── Colour ────────────────────────────────────────────────────────────
+\usepackage{xcolor}
+\definecolor{ink}{HTML}{20242A}
+\definecolor{accent}{HTML}{9B3F2F}   % terracotta
+\definecolor{soft}{HTML}{6E747C}
+\color{ink}
+
+% ── Drop caps, pull-quotes, contents, links ───────────────────────────
+\usepackage{lettrine}
+\usepackage{mdframed}
+\usepackage{titlesec}
+\usepackage{titletoc}
+\usepackage{fancyhdr}
+\usepackage{emptypage}
+\usepackage{needspace}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+  pdftitle  = {The Distance Between Two Homes},
+  pdfauthor = {Saumitra S. Phatak},
+  pdfsubject= {A Physicist's Education — in Experiments, Goodbyes, and Becoming}
+}
+
+% ── Part styling ──────────────────────────────────────────────────────
+\titleformat{\part}[display]
+  {\normalfont\sffamily\centering}
+  {\color{accent}\scshape\large Part \thepart}{16pt}
+  {\Huge\bfseries\color{ink}}
+\titlespacing*{\part}{0pt}{0pt}{20pt}
+
+% ── Chapter styling: big terracotta numeral, title, accent rule ───────
+\titleformat{\chapter}[display]
+  {\normalfont\sffamily\raggedright}
+  {\raggedleft\fontsize{58}{58}\selectfont\color{accent}\thechapter}{6pt}
+  {\Huge\bfseries\color{ink}\raggedright}
+  [\vspace{6pt}{\color{accent}\rule{\textwidth}{1pt}}]
+\titlespacing*{\chapter}{0pt}{6pt}{30pt}
+
+% Starred chapters (Interlude, Epilogue, About) — title + rule, no number
+\titleformat{name=\chapter,numberless}[display]
+  {\normalfont\sffamily\raggedright}
+  {}{0pt}
+  {\Huge\bfseries\color{ink}\raggedright}
+  [\vspace{6pt}{\color{accent}\rule{\textwidth}{1pt}}]
+
+% ── Section styling (in-chapter sub-headings) ─────────────────────────
+\titleformat{\section}[hang]
+  {\normalfont\sffamily\bfseries\large\color{ink}}{}{0pt}{}
+\titlespacing*{\section}{0pt}{1.5em}{0.4em}
+
+% ── Running heads ─────────────────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE]{\small\itshape\nouppercase{The Distance Between Two Homes}}
+\fancyhead[RO]{\small\itshape\nouppercase{\leftmark}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{soft}\leaders\hrule height \headrulewidth\hfill}}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{#1}}
+
+% ── Paragraphs ────────────────────────────────────────────────────────
+\setlength{\parindent}{1.2em}
+\setlength{\parskip}{0pt}
+\widowpenalty=10000
+\clubpenalty=10000
+\emergencystretch=1em
+\frenchspacing
+
+% ── Custom commands ───────────────────────────────────────────────────
+% Drop cap to open a chapter
+\newcommand{\dropcap}[2]{\lettrine[lines=3,findent=2pt,nindent=4pt]{\color{accent}\textsf{\textbf{#1}}}{#2}}
+
+% Scene break
+\newcommand{\scene}{\par\vspace{0.7em}{\centering\color{accent}\rule{0.85cm}{0.6pt}\par}\vspace{0.5em}\noindent\ignorespaces}
+
+% Custom part page: number + title + epigraph, all on one page
+\newcounter{bookpartno}
+\renewcommand{\thebookpartno}{\Roman{bookpartno}}
+\newcommand{\bookpart}[3]{%
+  \clearpage
+  \refstepcounter{bookpartno}%
+  \thispagestyle{empty}%
+  \vspace*{0.20\textheight}%
+  \begin{center}%
+    {\sffamily\scshape\large\color{accent} Part \thebookpartno}\\[16pt]
+    {\sffamily\bfseries\Huge\color{ink} #1}\par
+    \vspace{2.2em}%
+    \begin{minipage}{0.76\textwidth}\centering
+      \itshape\small #2\par\vspace{0.8em}
+      \normalfont\scshape\footnotesize\color{soft} #3
+    \end{minipage}%
+  \end{center}%
+  \addcontentsline{toc}{part}{\protect\numberline{\thebookpartno}#1}%
+  \vfil\newpage}
+
+% Pull-quote for dialogue / key lines
+\newmdenv[
+  leftline=true,rightline=false,topline=false,bottomline=false,
+  linewidth=2pt,linecolor=accent!45,
+  innerleftmargin=12pt,innerrightmargin=0pt,
+  innertopmargin=3pt,innerbottommargin=3pt,
+  skipabove=10pt,skipbelow=10pt,backgroundcolor=white
+]{pquote}
+
+% Unnumbered chapter that still lands in the ToC and running head
+\newcommand{\starchapter}[1]{\chapter*{#1}\markboth{#1}{#1}\addcontentsline{toc}{chapter}{#1}}
+
+% ── Table-of-contents depth ───────────────────────────────────────────
+\setcounter{tocdepth}{0}
+
+\begin{document}
+\frontmatter
+
+% ── Half title ────────────────────────────────────────────────────────
+\thispagestyle{empty}
+\vspace*{2.6in}
+\begin{center}{\sffamily\scshape\large The Distance Between Two Homes}\end{center}
+\clearpage
+
+% ── Title page ────────────────────────────────────────────────────────
+\thispagestyle{empty}
+\begin{center}
+  \vspace*{1.0in}
+  {\sffamily\bfseries\fontsize{27}{31}\selectfont The Distance\\[3pt] Between Two Homes\par}
+  \vspace{0.35in}
+  {\large\itshape A PhD, Two Homes,\par}
+  {\large\itshape and Too Many Questions\par}
+  \vfill
+  {\Large Saumitra S. Phatak\par}
+  \vspace{0.55in}
+  {\color{accent}\rule{1.3in}{0.8pt}\par}
+  \vspace{0.22in}
+  {\small Mumbai \(\;\longleftrightarrow\;\) West Lafayette \(\;\longleftrightarrow\;\) Boston\par}
+\end{center}
+\clearpage
+
+% ── Colophon ──────────────────────────────────────────────────────────
+\thispagestyle{empty}
+\vspace*{\fill}
+\begin{center}\begin{minipage}{0.8\textwidth}\small
+Shaped from personal essays written between 2021 and 2025. The events are true
+to the author's memory; the chronology has been tightened, and some scenes have
+been joined for the sake of one continuous story.\par
+\vspace{1em}
+Based on the \textit{Curious Writings} series.\\
+Copyright \copyright\ 2026 Saumitra S. Phatak.
+\end{minipage}\end{center}
+\clearpage
+
+% ── Dedication ────────────────────────────────────────────────────────
+\thispagestyle{empty}
+\vspace*{\fill}
+\begin{center}\itshape
+For Aai and Baba ---\\[0.4em]
+who always knew I would come home,\\
+whose hand stayed on my head\\
+however far the ground beneath my feet moved.\\[1em]
+And for everyone who stayed.
+\end{center}
+\vspace*{\fill}
+\clearpage
+
+% ── Epigraph ──────────────────────────────────────────────────────────
+\thispagestyle{empty}
+\vspace*{\fill}
+\begin{center}
+{\large\itshape Change is the only constant.}\\[1.1em]
+{\small\color{soft}--- the caption on a photograph, the first week of a PhD,\\ somewhere over the Atlantic, 2021}
+\end{center}
+\vspace*{\fill}
+\clearpage
+
+% ── Author's Note ─────────────────────────────────────────────────────
+\starchapter{Author's Note}
+
+I started writing these stories in 2021, mostly because too many things were
+happening and I needed somewhere to put them. Moving from India to the United
+States for a PhD sounds like one large event. In reality it is a thousand
+small events: your first terrible meal on a long flight, a bag left on a
+shuttle, a photograph from home arriving exactly when you are trying to work,
+an atom finally appearing on a camera, your parents looking out at American
+highways for the first time.
+
+I wrote about these moments separately. Some essays were travel updates, some
+were rants, and some were basically me asking questions that I had no ability
+to answer. A few were written when the event was still fresh enough to hurt.
+Others came later, when nostalgia had already started editing things in my
+favour. That is memory for you. It keeps a few photographs, loses the video,
+and then confidently tells you what happened.
+
+This book clubs those writings into one story. I have cleaned the chronology,
+joined a few related moments, and added what I understand now. But I have
+tried not to make the twenty-five-year-old version of me sound as if he knew
+the ending. He did not. Most of the time he was just trying to pass a course,
+fix an experiment, cook dinner, call home, and look confident while doing all
+four.
+
+The science in these pages is real, but this is not a technical book. It is
+about everything that happens around the science: the confidence you lose,
+the people who return it, the family that stays involved from eight thousand
+miles away, and the achievements that are far too small for a CV but somehow
+large enough to change you.
+
+\vspace{1em}
+\hfill\textit{Saumitra}
+
+% ── Contents ──────────────────────────────────────────────────────────
+\clearpage
+\tableofcontents
+
+% Start Arabic page numbering without book.cls forcing a blank recto page.
+\clearpage
+\pagenumbering{arabic}
+\makeatletter
+\@mainmattertrue
+\makeatother
+
+% ══════════════════════════════════════════════════════════════════════
+\bookpart{Departure}{A PhD does not begin when you enter a laboratory. It begins when the familiar scenery falls away, and you find out which parts of yourself can travel.}{Mumbai \(\to\) Chicago, 2021}
+% ══════════════════════════════════════════════════════════════════════
+
+\chapter{Wuhuu, Landed in USA!}
+
+\dropcap{T}{he first memorable thing America gave me} was a missing bag. Not
+some grand view of Chicago, not a life-changing realisation at immigration.
+One bag, left behind in the airport shuttle.
+
+I had travelled from Mumbai to Delhi, Delhi to Chicago, and then another two
+and a half hours through highways and cornfields to Purdue University. A
+senior picked us up and took us to our apartments. I called home and gave
+everyone the successful-arrival report. The journey was smooth. America had
+accepted me. I had reached the place for which we had spent months planning.
+Wuhuu, landed in USA!
+
+Then I counted my luggage. One bag was still on the shuttle.
+
+My Indian mind immediately announced that I would never see it again. I
+started explaining to myself why the things inside were not that important
+anyway, which is a very useful argument the brain creates only after losing
+something. Unfortunately, the things were important. So that philosophy
+survived for maybe three minutes.
+
+The bag came back two days later, completely fine. I was relieved, obviously,
+but also slightly embarrassed by how quickly I had declared the situation
+hopeless. That became my first lesson in America:
+
+\begin{pquote}\itshape
+Everything can be fixed, and what cannot be fixed can be lived without.
+\end{pquote}
+
+At that time I was talking about luggage. Later I used the same line for
+experiments, apartments, plans, and a few versions of myself. Not bad value
+from one forgotten bag, no?
+
+\scene
+
+The bag was only the comic ending. The real departure had happened much
+earlier, and strangely it happened on the short Mumbai-to-Delhi flight, not
+the international one.
+
+As soon as the plane took off, a massive junk of thoughts came into my mind:
+\textit{No, I cannot do this. I cannot leave everything I have in India for
+something I may or may not have in America.} This was after applying,
+accepting the offer, announcing the decision, packing everything, and reaching
+the plane. Very efficient timing by the brain!
+
+I was alone, and loneliness plus a lot of free time is not an ideal
+combination for me. I tried to analyse why I was feeling this way. That did
+not help. Then I started listening to music, and song by song the low feeling
+disappeared. Nothing outside had changed. The plane was still taking me away
+from home. But my mind was no longer concentrating only on that fact.
+
+We always complain that music distracts us while studying. We forget that the
+same distraction can be used when we are concentrating too well on the wrong
+things. On that small flight, I realised that our mind focuses on what we let
+it focus on. If you look straight ahead, you genuinely do not know what is
+happening behind your back.
+
+By Delhi, the panic had loosened its grip.
+
+The international flight was sixteen hours and my first one ever. The seat
+was not as good as I expected and neither was the first meal. So I remembered
+a rule that had helped me many times: you cannot get disappointed if you set
+your expectations low. I lowered them immediately, and suddenly the flight
+felt much better.
+
+Two Indian students were sitting beside me. We began with complaints about
+United Airlines, because there is no better way to start a friendship than
+complaining about the same thing. Complaining alone is useless; nobody shares
+the load or even reacts properly. In a group, it becomes a conversation. Soon
+we were discussing our hometowns, universities, and completely different
+views about life. By the end of the flight, after sleeping for only two or
+three hours, we were actually praising the airline and even the food. Humans
+are funny that way. We can start rewriting an experience before it has
+finished.
+
+\scene
+
+I had expected to post the whole journey online. During an earlier Bangalore
+trip, two or three hundred people practically knew what my taxi driver looked
+like. Surely going to Chicago deserved more coverage, right? Surprisingly, I
+did not post a single picture. The people I really wanted to tell already
+knew, and they were sad that I was going. What would everybody else do with
+the information? For once, living the journey felt more important than proving
+that I was living it.
+
+Chicago gave me the compulsory ``I have landed in the USA'' excitement. It
+lasted until I noticed that the airport looked like an airport and Americans
+were also humans. A few things were different, yes: the toilets, roads, and
+especially the cars. If you look only at the cars, it feels as if nobody in
+America has money problems. Look at the people and the balance returns.
+
+After this important international observation, my new friend and I sat in
+front of a McDonald's and shamelessly ate theplas packed from home while
+gossiping about Indian stand-up comedy. So much for becoming global citizens.
+
+Then came the shuttle. Chicago slowly disappeared and cornfields appeared out
+of nowhere. We wondered why the vehicle felt so fast until somebody remembered
+that the speed limits were now in miles per hour. I talked with the people
+around me for most of the two-and-a-half-hour ride and probably prevented two
+of them from sleeping. They may still be planning revenge.
+
+Purdue did not arrive like some grand movie destination. The buildings simply
+became fewer until this new place was suddenly where I lived. Looking back, I
+think that was the correct entrance. A PhD may officially begin in a
+laboratory, but emotionally it begins when the familiar scenery goes away and
+you find out which parts of you have travelled successfully.
+
+\chapter{Back to Survival Mode}
+
+\dropcap{L}{ong before America,} almost every important phase of my education
+started with the same feeling: the people here know more than I do, the rules
+have changed, and maybe I have arrived in the wrong room.
+
+My first school was in Mulund, where we lived with my grandparents. I used to
+win almost every competition: sport, speech, academics. You can probably guess
+that the competition was not world-class. No offence to them, but it is
+impossible for a person like me to win that many prizes otherwise! At five we
+moved to Thane, and Saraswati Secondary School was a serious step up. For the
+first couple of years I went into pure study mode just to regain my
+confidence.
+
+The school was Marathi-medium until seventh standard. In eighth, mathematics
+and science suddenly switched to English. Put yourself in the shoes of a
+twelve-year-old boy: everything you have understood in one vocabulary now has
+to move into another language while the knowledge remains intact. It was
+crazy. Again, survival mode first. Learn a little every day, pass the next
+test, and eventually the strange words stop feeling strange.
+
+That pattern would repeat for the rest of my life.
+
+Junior college took me to the other side of Thane and outside the almost
+entirely Marathi crowd of school. Hindi entered my life properly. Years later,
+it somehow became the language in which I wrote poetry best. After twelfth,
+most of my friends chose engineering. I chose basic science, partly to follow
+my father and partly because physics had made curiosity too difficult to
+ignore.
+
+That meant forty-five minutes each way on Mumbai local trains. Those journeys
+made me tougher and much more culturally open. They also taught me that
+personal space is not a fundamental right; sometimes it is merely a beautiful
+theory. The personality I eventually carried to America was heavily seeded
+during those years.
+
+Mumbai University added a one-hour commute and even less clarity about the
+future. A master's in physics does not simply land you a job, and the
+university name was not going to carry me by itself. A few dedicated
+professors motivated me, and through different connections I got projects at
+TIFR, the first genuinely famous Indian institution associated with my name.
+
+The commute became ninety minutes each way. A full day could run from 7:30 in
+the morning to 10 at night. Still, the harder part was the crowd. These were
+easily the best minds in physics I had met. They knew so much and seemed ready
+to do much more. Back to survival mode.
+
+Again: survival mode.
+
+I tried for a year or two and never fully settled there. Then COVID happened,
+terrible for the world but, strangely, a turning point in my education. Purdue
+admitted me at twenty-four. Imagine still turning your life around through
+education at that age, haha!
+
+\scene
+
+At Purdue there was no longer only the ``cream of India'' to compete with. It
+was the international cream, haha. Man, that was scary during the first
+semester. I had never even stayed in a hostel in India for twenty-four years,
+and now I was in another country. All my labmates were American, and I was the
+first international student in the group. Coursework, teaching, research,
+cooking, money, stupid American weather, transport, and loneliness all became
+one large assignment.
+
+When I say survival mode, I do not mean that every day was miserable. I mean
+the phase in which you stop expecting yourself to look impressive and just
+learn the next necessary thing. Hold on, improve a little, ask for help, come
+back tomorrow. Eventually the new place loses the power to frighten you.
+
+That pattern had repeated my whole life: five minutes to school, then across
+Thane, forty-five minutes by train, one hour, ninety minutes, and finally
+eight thousand miles. Every phase first made me feel smaller and then made my
+world larger. Purdue was new, sure, but maybe it was also the same old story
+on a much bigger map.
+
+\chapter{Too Much of Myself}
+
+\dropcap{D}{uring my first two weeks} in America, I compared everything with
+India: food, roads, houses, cars, manners, grocery stores, weather, family
+life, and even how seriously people took traffic rules. First-time travellers
+do this with great confidence after observing maybe twelve people.
+
+The food was bland, obviously, but Indian grocery stores had almost everything
+needed to make food exactly as it was made at home. The missing ingredient was
+not always a spice. It was the room full of people. At home, cooking and
+eating happen around routines that overlap. Here, everybody returned at a
+different time and food often became only a tummy-filler instead of a mood
+setter.
+
+Cars, big houses, and fancy gadgets are the things people in India talk about
+with ``some day'' in their voice. Here they were almost necessities. My
+professor could not believe I planned to manage without a car, even with free
+buses around Lafayette. Meanwhile, family time and relationships maintained
+by daily life, things we often treat as normal in India, looked like luxuries
+here. Somebody had played an Uno reverse on the whole society.
+
+I expected making friends in another country to be difficult. Turns out, you
+just have to start a dialogue. At bus stops, on campus, and around the
+apartment complex, I had meaningful conversations with people from six or
+seven countries within two weeks. Most people are curious. Nobody wants to
+start without a reason. If you can keep finding reasons, you can stay an
+extrovert almost anywhere.
+
+Our first apartment supplied enough reasons. We hosted students whose leases
+had not started, and then a flea problem nearly pushed us out of our own
+place. We packed again, stayed elsewhere during pest control, took help from
+people, and later arranged a party for those we helped and those who helped
+us. It was fun, of course, no need to mention that. Sometimes a community
+forms because everybody's inconvenience becomes public at the same time.
+
+\scene
+
+The strangest observation was discipline. They actually follow the rules!
+Who would have thought people might obey rules made to make their own lives
+easier? As a boy who had criticised Indian uncles for refusing to return a
+cricket ball after we entered their property without permission, the respect
+for privacy here was almost shocking. The manners were so consistent that I
+sometimes could not tell whether I was talking to a human or an automated
+voice. Both were equally polite.
+
+The positive side of privacy was that nobody cared. You got your space and
+some more. But once society stopped judging me, I quietly took over the job.
+Now it was just me judging myself all the time, and boss, that is difficult
+to escape.
+
+For the first time, I had too much of myself. I had always enjoyed solitude,
+but only in the necessary quantity. Here there was no family room to enter, no
+old friend appearing without a plan, no crowded train forcing human contact.
+The habits, interests, and emotions I thought were permanent started changing.
+There is no way to record your exact self on a particular day. You can access
+only the latest version and live with it.
+
+That version had to cook, shop, clean, plan, and recover without the invisible
+infrastructure of home. Even enjoyment required planning. You wake up on
+Saturday and now you have to plan the weekend yourself? How ridiculous no?!
+A trip means schedules, messages, a car, ticket prices, and then remembering
+that everyone involved is still a student. Sometimes the big plan is cancelled
+before breakfast and a smaller one is negotiated by lunch.
+
+The silence also amplified academic judgement. I was almost failing the
+mid-semester exams, research was not progressing, and teaching duties never
+ended. Things pile up and you notice only when they overflow. Confidence is
+crucial. If you do not hold onto it in time, the only place you will be able
+to ``stand and deliver'' is in a washroom!
+
+Fortunately, I caught up and passed the courses comfortably. Research stayed
+hard, but America began to feel manageable. I knew where to buy groceries,
+which bus to catch, and whom to call when something went wrong. The comparison
+slowly stopped being India versus America. It became the person who had left
+India versus the person forming here.
+
+Places matter, sure. But maybe their biggest effect is not how different they
+look. It is how much of yourself they force you to meet. Whether that is a
+good thing or not, I was still figuring out.
+
+% ══════════════════════════════════════════════════════════════════════
+\bookpart{Apprenticeship}{Most days, science is not the discovery of a new fact. It is the slow elimination of every reason you cannot yet trust what the apparatus is telling you.}{West Lafayette, 2022--2023}
+% ══════════════════════════════════════════════════════════════════════
+
+\chapter{A Better Tomorrow, Booked}
+
+\dropcap{T}{he first trip home} began weeks before I reached the airport. Just
+knowing that I was going made the difficult days better. You will notice this
+in adult life: Saturdays are often better than Sundays. Not because the plans
+are better, but because Saturday still has the feeling of a better tomorrow.
+For the last part of that semester, India was my Sunday. The ticket itself was
+doing half the emotional work.
+
+Lord COVID made sure until the end that I was not certain I could fly. Testing
+windows, lab hours, airline rules, and the uncertainty of results became more
+complicated than some quantum-mechanical calculations. Six hours before
+departure, the result finally came back negative. Schr\"odinger's cat was
+alive, at least for travel purposes.
+
+I landed in Delhi thinking, \textit{Yessss, I am back home!} Then I noticed I
+could not breathe perfectly. Pollution. Within minutes I had become the exact
+NRI I would previously have mocked, the one who leaves for five months and
+returns complaining about air and noise. Trust me, though, it all faded once
+the familiar colony came into view. The buildings seemed to clean the air by
+themselves. When you go from point A to point B, you understand how far you
+went only after coming back to A.
+
+Home received me without asking for proof of success. This may be the most
+generous and most dangerous thing about parents:
+
+\begin{pquote}\itshape
+If you go out and fail at a hundred things, you still come home a superstar in
+the eyes of your parents.
+\end{pquote}
+
+At Purdue, everything was measured: grades, data, teaching, competence. At
+home, you could be maximally irresponsible and still get away with it. Jet lag
+ate half the visit. I fell sick. I used all my negative thoughts to keep
+testing negative for COVID. My friends rearranged their routines around me,
+and my parents tolerated the demands of a returning child pretending to be an
+adult. It is good to be selfish sometimes, no?
+
+The trip was short, because every trip home is shorter from the inside.
+
+\scene
+
+Coming home does not restore an old saved file. Time has continued without
+your supervision. Friends have new routines and stories in which you appeared
+mostly through a screen. Parents are the same people and also a few months
+older. Mumbai looked familiar, but I was looking at it with eyes trained by
+another place. Had home changed, or had I? Obviously both, but the second
+answer was more uncomfortable.
+
+Before leaving again, I wanted an impossible arrangement: freeze one part of
+the world while fast-forwarding the other. Let me grow, but do not let my
+parents age. Let friends advance, but keep my place in their daily lives. Let
+the PhD take years while home stays untouched. Unfortunately, time flows for
+everyone. Do not listen to Einstein and his relativity; it does not help here.
+
+Still, the first trip was a success. Leaving India had stopped feeling like
+one irreversible act; I could cross the distance in both directions. Home was
+no longer simply behind me and America ahead. Each place now sat at one end of
+a journey, and reaching either meant leaving the other. I hoped later trips
+would feel easier and nothing important would change. Nothing! That hope was
+not very realistic, but it was useful while boarding.
+
+\chapter{Coherence: Broken Again}
+
+\dropcap{B}{y the fall of 2022,} something epic happened every morning: I
+woke up at 7:30 without an alarm. A digital clock sat directly across from my
+bed, and irrespective of when I slept, the first sight was almost always the
+same four digits. No, I had not secretly set an alarm. My biological clock had
+apparently accepted the routine more completely than I had.
+
+Chores by eight. Breakfast alternated between banana milkshake with eggs and
+ginger tea with a chicken sandwich. Check the weather before choosing clothes,
+because it could change fifteen or twenty degrees within a day. Stupid
+American weather! Then bus, lab, science, bus back around seven, and cooking
+dinner every evening, which many students found surprisingly ambitious. One
+episode or a chess game, maybe an hour of study, and sleep by eleven. That was
+it. Almost the same every weekday.
+
+The funny part was how easily this ``coherence'' broke. At ten in the morning
+I might be fully ready for an ideal day of work. Boom! A photograph from home.
+A message from school friends. An invitation to some campus event. Each one
+immediately sounded more fun than the schedule in my head, and now all those
+thoughts travelled with me through the day. Coherence gone.
+
+On another day, when nothing in the lab worked, the same messages were
+beautiful. They rescued the day. Same photograph, same friend, completely
+different effect. The power of relativity is intense, and apparently Einstein
+does not even have to be invited.
+
+\scene
+
+My first individual project tested that coherence properly. I had to build a
+radio-frequency antenna for a particular transition in trapped lithium atoms,
+part of a system for state-selective imaging. The description sounded
+impressive. The work felt like electrical engineering handed to someone
+trained in physics, and I struggled with it enough that I went to my adviser
+to discuss changing groups. His answer was neither a speech nor an empty
+reassurance:
+
+\begin{pquote}\itshape
+``I think you can do it. But I can help you find an easier lab, if the variety of
+projects here has become too much.''
+\end{pquote}
+
+The word \textit{easier} did its work. Nobody wants to leave because somebody
+offered to find an easier lab! I stayed.
+
+Research has no reliable scale for difficulty. A problem may be hard because
+you are learning, the equipment is wrong, the idea is wrong, nobody knows the
+answer, or because you made a stupid mistake on Tuesday and will discover it
+three weeks later. Emotionally, all five feel almost identical. I built,
+measured, failed, swapped components, learned enough engineering to be
+slightly dangerous, and built again. By December one prototype worked. Fancy
+scientific language aside, that felt very good.
+
+\scene
+
+Beyond the lab, Indiana turned colour. The fall was so beautiful that I came
+to believe everyone on earth should see it once: trees holding several seasons
+at the same time, a bright campus bracing for the cold, skies wide enough to
+make a daily walk feel briefly cinematic. Sometimes I left the building at a
+random hour and walked with no purpose, and a thought would arrive with
+surprising force: \textit{this was the dream.} A year earlier I had wanted to
+be somewhere nobody knew me, building an identity from nothing, and now I was
+living it so continuously that I had forgotten to notice. The person inside a
+dream still has groceries and bad weather and unfinished work; achievement
+does not glow from every angle while it is being lived. The recognition never
+lasted long. It did not need to. It gave the day enough energy to keep going.
+
+Earlier I believed that critical thinking was simply a blessing. By then I was
+not so sure; sometimes the happiest person in the room seemed to be the one
+able to think the least! Still, thinking was also how I turned this repetitive
+life into something worth writing about. If you are underthinking, read. If
+you are overthinking, write. I had heard that line somewhere and was happily
+using it as permission for both.
+
+\chapter{The Atom Appeared!}
+
+\dropcap{I}{n early 2023, a winter school} in Arizona gave us a fresh start.
+My senior labmate David and I spent a week learning from some of the best
+researchers in the field, in a beautiful deserted state where the scientist
+inside me breathed fresh air and the Indian foodie suffered daily. Fair
+exchange, I suppose.
+
+Being in that room gave me a strange confidence. It did not mean we were
+already successful, but we had reached a place where important scientific
+conversations were happening and had been allowed to join them. That has to
+mean the road is at least roughly correct, no? It is all about getting the
+approach, man. Once you have it, the rest starts falling into place.
+
+Back at Purdue, everybody focused on the first proper result for the lab. We
+were trying to trap, cool, and image one lithium atom. That sentence is short;
+the apparatus took years. You do not see an atom like a tiny ball. You collect
+its photons on a camera after lasers, magnetic fields, vacuum systems,
+electronics, optics, and software all agree to behave at the same time. If
+that sounds difficult, good, because it was.
+
+Then the atom appeared!
+
+We had trapped and cooled a single lithium atom from a hot cloud, for the
+first time in our lab, and imaged it with the best accuracy in the world for
+that system. That ought to feel good, eh? It did. The result came from my
+adviser's vision and the collective perseverance of the group: years of
+components, late evenings, failed alignments, rewritten code, and many boring
+decisions that we now had permission to call important.
+
+On the camera, the evidence looked small: one distribution for no atom and
+another for one atom. But that separation carried the weight of the whole
+apparatus. We started writing and submitted the lab's first paper by the end
+of spring. Very satisfying!
+
+\scene
+
+After a result works, memory becomes dishonest in a useful way. Failures turn
+into steps and delays become necessary lessons. The final story sounds much
+cleaner than the actual research. It is worth remembering that while we were
+in the middle, we had no idea whether the ending would arrive.
+
+After the paper, each student received an individual project and we began
+working in an ``Americanised'' way, everybody chasing a specialised American
+dream. The research can be boring, but you describe it in fancy language to
+stay motivated!
+
+American labmates also made cultural differences measurable. My entire
+undergraduate education had cost roughly \$1000 and graduate education around
+\$500. One labmate, carrying loans above \$100,000, joked that after hearing
+this he almost wanted to hit me. Lucky guy, he called me. Sometimes you
+appreciate your own system only after watching somebody react to the numbers.
+
+That summer I started teaching atomic physics online to master's students at
+Mumbai University. I had wanted to contribute something to people on a
+similar journey. Why not donate money? Well, the only considerable income of
+a PhD student is knowledge; by God's grace, we are below the poverty line in
+most other resources! So time and patience were what I could give.
+
+Teaching also exposed holes in my own understanding very efficiently. People
+say the best learning happens when you teach, and annoyingly they are right.
+Research had shown me the satisfaction of making one atom visible. Teaching
+showed me what it feels like when an idea becomes visible to another person.
+
+\scene
+
+Summer days began early because the sun was always competing to wake up first.
+I rode my bicycle to the lab through a small town where you could still hear
+nature, people waved back, and cars respected the cyclist. Who needs a car
+with such a ride? Philosophically, the lab was also physically downhill from
+my house. On difficult research days, life followed the geography a little
+too accurately.
+
+At twenty-seven, career questions had started sharing space with relationships,
+family, and where a future should be built. Friends were marrying, returning
+to India, staying in America, or making long distance work somehow. Our
+generation balances two careers, two geographies, independence, family
+values, ambition, and sacrifice. No pressure!
+
+I did not have an answer. My method was only to make the best of the present:
+write because I loved writing, teach on Saturdays because I loved teaching,
+go to the lab because despite everything I loved research, call my people,
+and stay available. Maybe that impact is what keeps us doing the silly tasks
+called work and chasing the stupid pieces of paper called money, so that in
+our spare time we can do a few things that make us feel alive.
+
+The first atom was a scientific milestone. It also made one general point very
+real for me: something invisible can become visible if enough scattered
+efforts finally agree. We all try, and we keep trying.
+
+% ══════════════════════════════════════════════════════════════════════
+\bookpart{Entanglements}{I was not half-present in two places. I was becoming a person made by the movement between them.}{Two homes, one experiment}
+% ══════════════════════════════════════════════════════════════════════
+
+\chapter{Which One Is Home?}
+
+\dropcap{B}{y December 2022,} my American life had improved greatly. Instead
+of fixing everything from cooking to my emotional state, I could focus on
+research. I had completed a course called \textit{How to Live Abroad} without
+ever receiving grades, and I felt strangely accomplished. The only major
+problem remaining was physics, which was at least the problem I had travelled
+there to solve.
+
+I packed gifts and cleared some mental space for new memories. On the flight
+home, the World Cup final between Argentina and France was live on every
+screen. Goosebumps! Different sections of the flight cheered for Messi and
+Mbapp\'e, and thousands of feet above the earth, people from everywhere were
+temporarily united by one football match. Sport does this without asking for
+passports or explanations. Argentina won, and naturally I took it personally.
+
+\scene
+
+At home, ten of us in our mid-twenties decided that our demanding lives needed
+a spiritual trip to Varanasi. Our parents had doubts. We also had doubts, to
+be honest, but went anyway. At the Ganga ghats and Kashi Vishwanath temple, we
+found practices and stories that had existed around us since childhood but
+which we had never properly examined. Of course, as freshly manufactured
+NRIs, we also ate everything we had missed and complained about pollution. It
+takes only a few months abroad to become slightly annoying!
+
+Varanasi did not solve our questions about careers, relationships, or the
+future. It did something else. It put our confusion next to a city much older
+than all of us, and suddenly every urgent decision looked a little less
+urgent. Sometimes scale is enough.
+
+\scene
+
+The last night at home undid the composure I had kept the whole trip.
+
+Goodbyes never get easy. I had assumed the second one would hurt less because
+we had practised. Wrong. On the last evening, I could clearly imagine how my
+friends' lives would develop over the next year while I participated mostly
+through a screen. My family was growing and getting old at the same time. Why
+do parents have to get old along with us? Everyone wonders this and nobody has
+a useful answer.
+
+I had held my tears for most of the trip, but that night I could not. We cried
+together as a family and then prepared ourselves for the next year with, of
+course, a smile. There was no tragedy; I was returning to an opportunity we
+all valued. That is exactly why it was difficult to explain. You can be lucky
+and sad at the same time. So back I went to the stupid yet opportunistic work
+life, to chase my American dream until the next visit.
+
+\scene
+
+Living between countries changed the word \textit{home}. At first, home was
+Mumbai and Indiana was simply where work happened. Then the Indiana apartment
+collected routines, friends, cookware, failures, and jokes, and became a
+working-home. Mumbai remained the place where I could be maximally
+irresponsible, although now every visit had a departure date attached.
+
+For a while I thought one of these had to be the real home. Why? A person can
+belong to more than one place, just not in the same way. Mumbai held the
+history that needed no explanation. Indiana held the future I was trying to
+construct. One knew me before this ambition; the other knew me through it.
+
+The distance could be measured in miles, flights, time zones, missed events,
+and meals shown through video calls. But both places could still exist inside
+one day. That is why one photograph from home could completely break my
+coherence in the lab. I was not exactly half-present in two places. I was
+becoming somebody shaped by travelling between them.
+
+But let us not make this sound too beautiful. Two lives running in parallel
+also mean missing things. A wedding attended through a phone. A friendship
+changing shape while you are absent. Parents and grandparents ageing during a
+winter you spend aligning a laser. You can fly home, but you cannot fly back
+into every ordinary day that happened without you.
+
+Nobody tells you clearly that leaving is also a slow kind of mourning. You do
+not notice it every day because you are busy building the life for which you
+left. Later, the missed parts become visible. The privilege is real, and so is
+the price. I no longer think the task is to choose which home is real. The
+task is to carry the distance without pretending it is free.
+
+\chapter{When My Parents Entered My World}
+
+\dropcap{T}{here are experiences} that are too large to explain efficiently.
+My parents' first trip to America is one of them. So let me start the way my
+mother starts every journey: Bappa Morya.
+
+We bought the tickets almost a year in advance. My father had never travelled
+outside India, and as the date came closer, every question about airports,
+immigration, and the long flight increased the household anxiety. But they
+trusted God, each other, and the Emirati horses pulling the palanquin. After
+their small Sinbad voyage, they reached the port of Chicago.
+
+I drove two hours to collect them. That detail mattered to me. On childhood
+trips, I had simply followed them without knowing the route. Now they did not
+know the road and I was responsible for showing it. No birthday had made me
+feel as adult as driving my parents away from that airport.
+
+We left Chicago. The skyscrapers slid behind us and the American landscape
+became the one I actually knew: highway, open field, wind turbine, long
+distances between buildings. My father looked back at the city skyline and
+said, \textit{``Aaplya Mumbaichya imarti tichbhar vaatatil''}, ``next to
+these, our Mumbai buildings would look tiny.'' Then the skyline was gone, and
+there were only windmills, and he said nothing and simply looked. At the
+apartment, ready-made food welcomed the ``guests.'' Then, slowly, we turned
+the flat into a home.
+
+\scene
+
+Jet lag put them into an afternoon sleep from which they had no intention of
+returning. Now it was my job to keep \textit{them} awake, organise the day,
+explain appliances, and reassure them that the silence outside did not mean
+something was wrong with the city.
+
+They met friends, labmates, and relatives who had previously existed for them
+as names or rectangles on a screen. Watching the groups meet felt like two
+cinematic universes crossing over. Their presence changed the apartment.
+Meals became social again. During one quiet Sunday with cousins, I forgot for
+a while that I was abroad.
+
+America seemed to have more time. In India, twenty-four hours often fail to
+contain one day; in Indiana, retirement could be practised properly. The
+strongest evidence was my mother going a full month without asking for Zee
+Marathi. The sun rising in the west would have surprised me less.
+
+More importantly, they saw what no phone call could show: the road to the lab,
+the grocery store, the scale of the university, the friends who had helped,
+and the quiet in which I had built a life. For years they had supported an
+abstraction called ``PhD in America.'' Now it had rooms, faces, distances, and
+a bicycle route.
+
+\scene
+
+A month passed at the speed of an hour. At the airport, the direction of the
+separation had reversed: I was no longer leaving their world; they were
+leaving mine.
+
+Parents first teach you to imagine a world larger than the one you can see.
+Showing them my world later was deeply satisfying, not because America was
+some superior destination, but because the imagined future had become a place
+where we could stand together.
+
+Their visit also confirmed something simple: no matter how old we become, we
+become children again around our parents. The dependence only changes shape.
+As a child, my safety rested in their competence. As an adult, more and more
+of my happiness was hiding inside theirs. The ground beneath us can change;
+the hand above the head remains theirs.
+
+After they left, the apartment looked exactly the same and felt completely
+wrong for a few days. Then I went back to work, because what else do you do
+after a meaningful goodbye? But now the two worlds were no longer separated
+only by imagination. My parents had travelled the Indiana roads, sat in the
+apartment, met the people, and lived inside the ordinary life for which I had
+left home. The distance between our two homes was finally something we all
+understood.
+
+\chapter{Who Says Achievements Need to Be Big?}
+
+\dropcap{I}{n January 2024,} one month later than planned, my online chess
+rating crossed 2000. I was so thrilled that I could not sleep. It is stupid
+that one random number gives you so much excitement and self-validation, but
+there we were. I explained the rating system to friends who do not even care
+about chess, built an unnecessary cache in their minds, and then announced the
+milestone like a major scientific result. What is the point of personal goals
+if you cannot make a big deal out of them with your people, right?
+
+Around the same time, a school crush from years back confessed that she had
+felt the same way. A third-year PhD student instantly became a schoolboy with
+very delayed experimental confirmation, and I bragged to my boys for an
+unreasonable amount of time. Who knew a PhD student could still get that
+excited about schoolyard romance? The inner child does not care much about
+your academic progress.
+
+Then I got an American driver's licence. People here get one at sixteen; I got
+mine at twenty-seven. Big deal, right? Actually yes. Who decides the age at
+which you are allowed to be happy about something?! The licence meant I could
+drive my parents from the airport. I was so relieved that I took the weekend
+off, which PhD students will recognise as another achievement of similar
+difficulty.
+
+\scene
+
+I started learning classical music that spring. Until then I had mostly sung
+Bollywood songs, so classical music was completely unknown territory. A
+concert at Purdue struck a chord that I genuinely did not know existed. If
+music ever connects you with someone or something beyond yourself, cherish
+it. Those bonds can last.
+
+And I learned to make rotis! Trust me, it takes a full day to prepare yourself
+mentally for this activity on a weekend. With serious remote coaching from my
+mother, I tried. The rotis were round enough that people ate them with a
+humming sound, which is the only standard that matters.
+
+Years earlier, I loved a non-vegetarian thali from a Mumbai place called
+Suwidha: chicken curry with hot rotis. Recreating something similar in
+Indiana put a slice of home on the table. I slept like a baby that afternoon,
+full and content.
+
+\scene
+
+The last new thing I did that spring was take my own religion seriously. When
+you land in a foreign country you either cling to your culture harder or drift
+from it entirely, and for me drifting was never an option; I had been going to
+the shakha for two years, mostly for the traditional games we had played back
+home, and along the way I began reading about practices I had previously
+accepted without examining.
+
+Hinduism is endlessly mocked for having too many gods, but consider that in
+physics we are perfectly comfortable with multiple forms of energy, multiple
+fundamental forces, a whole zoo of elementary particles. If that multiplicity
+is allowed in our description of the physical world, why is it foolish to keep
+several focal points for spiritual energy: Saraswati for learning, Ganesha for
+beginnings, Shiva for power and transformation? This is not inconsistency. It
+is flexibility. And the other charge, that we look for God in stone. Well, do
+we not all keep photographs of the people we love around the house? The object
+is not confused with the person; it focuses memory and relationship. An idol
+is the same kind of thing: a place to gather attention each day and point it
+toward your own becoming. Religious practice, in the end, should serve your
+betterment, not the other way around. This was not a proof of religion by
+physics. It was a way of holding my own inheritance without embarrassment.
+
+\scene
+
+None of these things will appear on a CV. Maybe that is precisely their value.
+Graduate school trains you to measure publications, talks, awards, years, and
+offers. But what about learning to cook every day, holding friendships across
+time zones, asking for help, recovering from panic, noticing the fall, driving
+to an airport, or building a cultural life on purpose? Those things also
+happened during the PhD. Institutions just do not have a box for them.
+
+One person's licence is routine and another's is freedom. One dinner is just
+dinner; another is a reconstructed home. A random number on a chess server can
+hold a year of losses. These achievements look small only when viewed from
+outside.
+
+Maybe they do not replace ambition, and they should not. But they give meaning
+to the individual doing all that ambitious work. These are the things that
+help us fall forward, right?!
+
+% ══════════════════════════════════════════════════════════════════════
+\clearpage
+\starchapter{Life, According to Quantum Physics}
+% ══════════════════════════════════════════════════════════════════════
+
+\dropcap{A}{t some point in the PhD}, physics stopped being only the subject I
+studied and became the language in which I compared everything else. This is
+probably an occupational hazard. Spend enough time thinking about tiny
+particles and soon you start explaining family, attention, and decisions with
+quantum mechanics! Some of these analogies are surely stretched. I am offering
+them as metaphors, not scientific proofs, so bear with me and decide which
+ones survive.
+
+\textbf{\textsf{The observer effect.}}\quad In quantum mechanics, measuring a
+system can change it. In life, observation is not passive either. Every time
+we interact with someone, we alter their state a little and they alter ours.
+Your presence in somebody's life is participation, not just observation.
+
+\textbf{\textsf{Collapse.}}\quad Before measurement, a quantum system may be
+in a superposition of possibilities. A measurement gives you one definite
+outcome. Choices feel similar: every decision turns many ``what-ifs'' into one
+``what is.'' Until you decide, life is a cloud of maybes. Once you choose, you
+have to live forward from that result. Scary, but also useful; imagine having
+to occupy every possible life simultaneously!
+
+\textbf{\textsf{Coherence.}}\quad A single particle holds its coherence far
+longer than a system of many; scale brings noise. Our minds are no different.
+The longer you can sustain one clear line of thought without scattering it,
+the better the result. Focus is the superpower most people keep meaning to
+develop.
+
+\textbf{\textsf{Uncertainty.}}\quad Heisenberg's principle says you cannot
+know a particle's position and momentum perfectly at the same time; chase one
+and the other blurs. In life, the tighter you grip control, the less freedom
+you feel. Loosen your hold on certainty, and another dimension quietly opens.
+
+\textbf{\textsf{Resonance.}}\quad When two systems have matching frequencies,
+they exchange energy efficiently. We even say two people are on the same
+wavelength. But a little mismatch keeps a dialogue alive. If everybody agrees
+on everything, what will they talk about? So if you want to stay social, maybe
+disagree a little. Not too much, boss, just enough to continue the
+conversation.
+
+\textbf{\textsf{Entanglement.}}\quad Entangled particles have correlations
+that survive distance. We have a human comparison ready: family. Across time
+zones, moods and fears still travel. Obviously this is not literal quantum
+entanglement, before a physicist attacks me, but emotionally the analogy is
+difficult to resist.
+
+\textbf{\textsf{The basis set.}}\quad Every quantum state can be expressed in
+a chosen basis. Our opinions also sit on foundational beliefs that we may not
+notice. The basis can change, though, and that is the interesting part. If you
+are arguing with somebody, the conversation can go somewhere only after you
+understand what their basis is. Otherwise you may both be correct in different
+coordinate systems and angry for no reason.
+
+\textbf{\textsf{Energy and evolution.}}\quad The energy of a physical system
+determines how it evolves in time. Your present energy (mental, emotional)
+sets where you are going next. It sounds obvious stated plainly. It stops
+being obvious at two in the afternoon on a difficult Tuesday, after six hours
+at a failing experiment.
+
+\textbf{\textsf{There is no zero.}}\quad Even in a vacuum, the quantum fields
+buzz; nothing is ever truly empty. There is no such thing as nothing
+happening. The quiet moments are full of background activity, things being
+processed, potential gathering for the next event. Stillness is not emptiness.
+It is preparation.
+
+\scene
+
+In the end, quantum physics is definitely still about particles, so let us not
+get carried away! But it also gives us a fun vocabulary for participation,
+uncertainty, and connection. We make measurements, choose among possibilities,
+lose coherence, find it again, and remain connected to people who are far
+away. The universe does not reveal everything at once, and neither do we.
+
+\textit{One experiment, one conversation, one moment at a time.}
+
+% ══════════════════════════════════════════════════════════════════════
+\bookpart{Becoming}{We need events that do not advance the work, in order to remember why advancing the work matters.}{Indiana \(\to\) Boston, 2024--2025}
+% ══════════════════════════════════════════════════════════════════════
+
+\chapter{The Lab Stays. We Don't.}
+
+\dropcap{O}{n the eighth of April, 2024,} the world went dark in the middle of
+the day. The solar eclipse! Trust me, knowing the science did not make it less
+mesmerising. Imagine everything around you becoming dark and one beautiful
+ring remaining in the sky, probably the largest ring any of us will ever see.
+
+Our whole PhD gang watched with the astrophysics community, their telescopes
+and commentary giving us a perfect view. For three minutes, some people
+shouted and others tried to photograph the darkness. As an aspiring scientist,
+it felt especially satisfying. The stars literally aligned and reminded us
+that the science we study is describing a real universe. These are the moments
+that make the PhD journey feel worthwhile.
+
+\scene
+
+That summer, the senior-most student became the first person to graduate from
+our lab. He had been one of the first American students I spoke with in 2021,
+and his welcome, along with our postdoc's, was part of why I joined the group.
+We looked back over three years of research and enjoyed the luxury of
+nostalgia while still standing inside the lab. Then he said:
+
+\begin{pquote}\itshape
+``It's so weird that after five years, you move on, but the lab stays right where
+it is.''
+\end{pquote}
+
+Such an interesting thought! The optical table, cables, vacuum chamber, and
+unfinished tasks wait in the same places every morning. The people pass
+through. A project that once occupied your entire life becomes a paper, a
+folder, or an apparatus inherited by somebody who did not see it begin.
+Memories are photographs, not videos. We keep a few frames and call them five
+years.
+
+\scene
+
+Around the same time, I attended two American weddings for labmates. The
+ceremonies looked familiar because movies and television had trained us well,
+but the two weddings were completely different. One was carefully arranged,
+outdoor and child-free, designed as a picture-perfect memory. The other was
+religious and relaxed, with families and children doing their own things.
+Both had websites and gift registries. You clicked one selected gift and it
+arrived at the couple's house with your message. Such an efficient algorithm,
+indeed reflecting the American way!
+
+India also won the Cricket World Cup that summer. It happened on a Saturday
+morning here, and the whole weekend felt successful before it had properly
+begun. Most Indians slept better after that victory. Our current heroes had
+finally lifted the trophy after enough heartbreaks, and the inner child was
+very satisfied.
+
+An eclipse, two weddings, a cricket victory, and a graduation do not form a
+clean scientific dataset. But all of them interrupted work and reminded me
+why life cannot be measured only by how much the project advanced. The
+universe worked without my troubleshooting. Friends built lives beyond the
+lab. A childhood dream in cricket came true. One student left while the
+apparatus remained.
+
+One day I would also leave and somebody else would inherit the urgent problem
+on my table. When is the correct time to look back and enjoy the nostalgia?
+Before leaving, during the goodbye, or years later? I do not know. Everyone
+finds that answer separately. The lab stays. We do not. That does not make the
+years less meaningful; maybe it is why we should notice them while they are
+still happening.
+
+\chapter{Boston! Finally, a Job}
+
+\dropcap{B}{oston arrived} with fall colours and, for the first time in my
+life at twenty-eight, a job! Technically it was an internship, but after
+nearly a decade as a student I was going to call it a job. I moved from
+academia toward industry, from small-town Indiana to a proper city, and from
+studying quantum systems toward helping build machines that use them.
+
+For the first week, while my work authorisation was processing and I was
+``legally unpaid,'' I explored the river by every possible mode: walking,
+running, and biking. The sunsets reflected in the water with a skyline behind
+them and gave a strong Marine Drive feeling to the Mumbaikar inside me.
+
+Public transport was another pleasant surprise. Tap-and-pay subway and buses
+connected even places twenty-five miles away. After living in parts of America
+where you are finished without a car, this felt refreshing. People say Boston
+has a European vibe; half of that is surely the transport, old houses, and
+streetlamps. A proper city makes everything expensive, including people's
+time, but it also gives you other lives to look at while living your own.
+
+Setting up a new apartment is painful at any age. You plan a hundred things,
+order a thousand, and by day five become semi-functional. Luckily, I had
+friends and family nearby. My cousin lived four blocks away, which produced
+many home-cooked meals. There were hikes, a Marathi play, chess with
+colleagues, and busy weekends. My adviser once joked that I have more
+connections in America than he does. Boston provided supporting data.
+
+\scene
+
+At three in the morning on a Sunday, my phone rang. I kept the volume high
+because living alone had trained me to treat availability as a safety system.
+It was my roommate, calling from elsewhere in the duplex, whispering:
+
+\begin{pquote}\itshape
+``There's someone in our house. Maybe a homeless person. I think we should check.''
+\end{pquote}
+
+Man! I hope you never experience the chills I got in that moment. I stepped
+into the hallway and asked how he was so sure. He had seen a large man looking
+into our rooms, and none of the bedroom doors were locked.
+
+We debated calling the police. My roommate, braver or stupider than me,
+insisted on checking downstairs. We took a rod and flashlight and walked down
+slowly. The back door was half open. Nobody was there. Only a few drops of
+blood remained on the kitchen floor.
+
+We locked everything, messaged the others, and told the landlord. By the next
+day, the likely explanation was that another roommate, returning in an altered
+state, had left the door open. We changed every lock. I installed a camera and
+put rods in the window tracks.
+
+Still, fear took longer to leave than the intruder, if there had been one at
+all. For a student abroad, this is a special nightmare: the people you would
+normally call first are thousands of miles away. Later you say, ``Whatever
+doesn't kill you makes you stronger.'' In that moment, trust me, the sentence
+is completely useless. It remains one hell of an experience to not remember.
+
+\scene
+
+The work itself was extraordinary. I worked more than ten hours on many days,
+but it did not always feel exhausting because it aligned so closely with my
+PhD research: quantum computing, building machines based on principles I had
+spent years studying. Once again I had entered a room full of people with
+frightening expertise. School, university, TIFR, Purdue, and now industry:
+survival mode knew the route by then.
+
+The quantum industry had a funny mixture of confidence and uncertainty.
+Scientists and investors talked about a revolution, while nobody knew which
+architecture, company, or timeline would survive. Maybe the dream would burst
+like a bubble. Maybe it would transform the world like AI after COVID. Nobody
+really knew, including the people paid to build it.
+
+The PhD had not taught me to predict the future. It had taught me to work
+while the answer was unavailable. So without demanding certainty, let us ride
+the tide, shall we?
+
+\chapter{Change Is the Only Constant}
+
+\dropcap{A}{t the edge of completing the PhD,} my thoughts arrived with more
+diversity than ever: nostalgia, fulfilment, excitement, gratitude, and some
+confusion, obviously. But the strongest one was familiar: \textit{change is
+the only constant.} I had used those words as an Instagram caption during my
+first week in the United States. Back then they sounded like a nice sentence.
+After the PhD, they felt experimentally verified.
+
+Every stage had first disturbed my confidence. Mulund to Thane. Marathi to
+English in the middle of school. Junior college, crowded trains, bachelor's,
+master's, TIFR, Purdue, and industry. At every transition, the talent around
+me appeared to increase and everybody seemed to own some vocabulary or
+certainty that I lacked. Back to survival mode each time.
+
+This is not an argument that everybody should suffer permanently. Survival
+mode is the phase between two comfortable versions of yourself. Your old
+methods no longer work perfectly and the new ones are not yet natural. So you
+hold your competitive spirit through the high tide, learn one thing, ask one
+question, and return the next day. Small improvements compound quietly. Years
+later, people may call the result talent and completely miss the panic that
+helped build it.
+
+\scene
+
+Nearly thirty years of education is longer than anybody would recommend. Was
+it worth it? You decide. If education is only a transaction for employment,
+my route was spectacularly inefficient: long commutes, financial limitations,
+exams, anxiety, difficult research, and a doctorate completed around thirty.
+There were certainly shorter ways to start earning.
+
+But education changed much more than my employment. Marathi-medium school
+became a base from which other languages could grow. Mumbai trains expanded
+my tolerance and culture. A few professors at imperfect universities showed
+me the force of good teaching. TIFR showed me serious research. Purdue made
+science international and converted independence from an idea into a daily
+routine. The lab taught me to remain with a problem that did not care about
+my confidence. Teaching sent some knowledge back to where it had started.
+Industry connected one experiment to a much larger ambition.
+
+A CV draws this as a smooth upward line. It never felt smooth while I was
+inside it. The real education was rebuilding the person doing the learning
+every time the environment changed.
+
+\scene
+
+I expected finishing to provide clarity. It mostly gave me a more advanced
+version of confusion! The difference was that I no longer needed certainty as
+proof that I belonged. A career can change, a company can fail, a field can
+turn, and the next phase may again begin in survival mode. After this many
+trials, that possibility no longer sounds like evidence of failure.
+
+The lab will stay. Mumbai will continue without waiting. Boston may become a
+memory, a home, or only a chapter. Parents will age. Friends will build lives
+whose daily details I cannot always share. New people will enter these places,
+change them, and leave their own traces. This is not a comfortable thought,
+but comfort has never stopped it from being true.
+
+Still, change does not mean that nothing remains. You carry things forward:
+the language you once struggled with, a friendship started by complaining on
+a flight, the experiment that worked after you nearly abandoned it, the road
+you later showed your parents, the habit of waking without an alarm, and the
+willingness to begin a conversation.
+
+In the year I turned thirty, I could finally say that my formal education was
+ending. It had been long, longer than anyone would aspire for. But one thing
+was clearly not ending: the learning. Fortunately or unfortunately, that is
+the only truth!
+
+% ══════════════════════════════════════════════════════════════════════
+\backmatter
+\clearpage
+\starchapter{Epilogue: The Latest Version}
+% ══════════════════════════════════════════════════════════════════════
+
+\dropcap{I}{n my first weeks in America,} I wrote that there is no way to
+document your exact self at one moment. Habits, interests, and emotions keep
+changing, so you can access only the latest version and live with it.
+
+This book is my attempt to argue with my own sentence. Very on-brand, I think.
+
+I cannot recover the earlier versions completely, but they left records. One
+panics while Mumbai disappears below an aeroplane. One compares every American
+habit with India. One nearly fails his courses in a quiet apartment. One hears
+his adviser use the word \textit{easier} and decides to stay. One sees a
+single atom appear on a camera and cannot sleep properly from excitement.
+Another drives his parents from Chicago, walks beside a river in Boston, and
+starts calling an internship a job. All of them are me. None is the final
+version.
+
+For a long time I assumed life should move toward stability. Now I am not so
+sure. No, I am not suggesting changing careers daily or marrying a hundred
+people! But destinations become ordinary surprisingly fast. Most of the fun,
+frustration, and growth happen while approaching them. Goals are necessary
+mainly because they build journeys.
+
+Confusion makes us ask questions. Differences keep conversations alive.
+Distance makes certain forms of love visible. Failure tells you what to
+measure next. Maybe stability is not the final achievement we imagine. Staying
+interested, changing phases, and remaining available to people may be enough.
+Really? Not sure. But it is not complete nonsense, right?!
+
+I have stopped trying to subtract what this journey cost from what it gave.
+The two came together. The gain was often louder while events happened, and
+the loss sometimes became louder later. Both are true.
+
+The experiment continues, and unfortunately the scientist is also the subject.
+I observe, participate, lose coherence, recover it, and modify the apparatus
+whenever possible. The distance between two homes was not only the thing
+separating them. It also built the person travelling between them.
+
+There will be another version after this one. Let us see what he thinks, no?
+
+\textit{One experiment, one conversation, one moment at a time.}
+
+\vfill
+\begin{center}
+{\color{accent}\rule{1.3in}{0.8pt}}\\[0.3in]
+{\small\itshape Everything can be fixed.\\ What cannot be fixed can be lived without.}\\[0.5in]
+{\footnotesize\color{soft} West Lafayette, Indiana \(\cdot\) 2026}
+\end{center}
+
+% ══════════════════════════════════════════════════════════════════════
+\clearpage
+\starchapter{About the Author}
+% ══════════════════════════════════════════════════════════════════════
+
+\dropcap{S}{aumitra Phatak} grew up in Thane, Maharashtra, and completed his
+bachelor's and master's degrees in physics in Mumbai before joining Purdue
+University's physics PhD programme in 2021. His doctoral research is in
+ultracold atomic physics, the cooling and imaging of single atoms in optical
+tweezers, toward the assembly of ultracold polar molecules. He completed a
+quantum computing internship in Boston in 2025.
+
+He has been writing about life, science, and the spaces between the two since
+2021, in the series \textit{Curious Writings.} He still wakes up without an
+alarm.
+
+\vspace{1.4em}
+\noindent{\small\color{soft}\url{https://saumitraphatak.github.io/curious-writings}}
+
+\end{document}

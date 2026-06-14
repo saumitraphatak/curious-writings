@@ -10,7 +10,9 @@
 
 ## What This Is
 
-A personal essay blog. 13 honest essays written over 4+ years — on life abroad, a Physics PhD, identity, travel between Mumbai and Indiana, and what it means to be genuinely curious. Written in English, Marathi, and Hindi.
+A personal essay blog and memoir home. It includes 13 honest essays written
+over 4+ years and *The Distance Between Two Homes*, a 58-page book reshaped
+from the archive.
 
 ---
 
@@ -141,7 +143,7 @@ Filter buttons: `.filter-btn[data-filter="category"]` — JS hides/shows cards b
 
 ---
 
-## All 12 Essays
+## All 13 Essays
 
 | # | File | Title | Category | Language | Year |
 |---|---|---|---|---|---|

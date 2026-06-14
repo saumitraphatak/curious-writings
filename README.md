@@ -1,10 +1,21 @@
 # Curious Writings
 
-*Personal essays by Saumitra Phatak*
+*Personal essays and a memoir by Saumitra Phatak*
 
-12 honest essays written over 4+ years by a Mumbaikar navigating a Physics PhD at Purdue University. On life abroad, quantum research, identity, relationships, and what it means to be genuinely curious about being alive.
+13 honest essays written over 4+ years by a Mumbaikar navigating a Physics PhD at Purdue University. On life abroad, quantum research, identity, relationships, and what it means to be genuinely curious about being alive.
 
 **Live site:** https://saumitraphatak.github.io/curious-writings/
+
+---
+
+## The Book
+
+**The Distance Between Two Homes**
+
+*A PhD, Two Homes, and Too Many Questions*
+
+The 58-page memoir reshapes the essay archive into one continuous story. The
+finished PDF and LaTeX source live in `assets/book/`.
 
 ---
 
@@ -24,6 +35,7 @@
 | 10 | एक उन्हाळी सहल | Travel & Home | Marathi | — |
 | 11 | Life & Quantum Physics | Science | English | — |
 | 12 | The Boston Experience | Travel & Home | English | — |
+| 13 | Change Is the Only Constant | PhD Life | English | 2025 |
 
 ---
 
@@ -68,6 +80,10 @@ curious-writings/
 ├── curious-writings.html       # Main page — essay grid with filter bar
 ├── css/
 │   └── styles.css              # Design system
+├── assets/book/
+│   ├── the-distance-between-two-homes.pdf
+│   ├── the-distance-between-two-homes.tex
+│   └── the-distance-between-two-homes-cover.png
 └── articles/
     ├── 01-india-usa-travel.html
     ├── 02-usa-two-weeks.html
@@ -80,7 +96,8 @@ curious-writings/
     ├── 09-summer-2024.html
     ├── 10-ek-unhali-sahal.html
     ├── 11-life-quantum-physics.html
-    └── 12-boston-experience.html
+    ├── 12-boston-experience.html
+    └── 13-learnings-of-education.html
 ```
 
 ---

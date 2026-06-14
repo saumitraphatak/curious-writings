@@ -47,6 +47,7 @@ body {
   font-family: var(--ff-sans);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 a { color: inherit; text-decoration: none; text-underline-offset: 0.18em; }
@@ -204,6 +205,95 @@ img { max-width: 100%; display: block; }
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
+
+/* ─── BOOK FEATURE ─── */
+.book-feature {
+  margin: 0 0 4rem;
+  padding: 3.8rem 2rem;
+  background: var(--surface);
+  border-top: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+}
+.book-feature-inner {
+  width: min(100%, 1040px);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(210px, 300px) minmax(0, 1fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: center;
+}
+.book-copy { min-width: 0; }
+.book-cover-link {
+  display: block;
+  width: min(100%, 280px);
+  justify-self: center;
+  transition: transform 0.2s ease;
+}
+.book-cover-link:hover { transform: translateY(-4px); }
+.book-cover {
+  width: 100%;
+  height: auto;
+  aspect-ratio: auto;
+  object-fit: contain;
+  border: 1px solid var(--border);
+  box-shadow: 0 22px 50px rgba(44, 26, 14, 0.16);
+}
+.book-copy h2 {
+  max-width: 680px;
+  font-family: var(--ff-serif);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.55rem;
+  overflow-wrap: break-word;
+}
+.book-subtitle {
+  color: var(--accent);
+  font-family: var(--ff-serif);
+  font-size: 1.05rem;
+  font-style: italic;
+  margin-bottom: 1.2rem;
+}
+.book-description {
+  max-width: 650px;
+  color: var(--text-mid);
+  font-family: var(--ff-serif);
+  font-size: 0.98rem;
+  line-height: 1.75;
+}
+.book-copy blockquote {
+  max-width: 620px;
+  margin: 1.35rem 0;
+  padding-left: 1rem;
+  border-left: 2px solid var(--accent);
+  color: var(--text);
+  font-family: var(--ff-serif);
+  font-size: 0.92rem;
+  font-style: italic;
+}
+.book-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem 1.2rem;
+  color: var(--text-light);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.book-meta span + span::before {
+  content: '•';
+  margin-right: 1.2rem;
+  color: var(--accent-warm);
+}
+.book-actions { align-items: center; }
+.text-download {
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 700;
+  border-bottom: 1px solid rgba(193, 68, 14, 0.28);
+}
+.text-download:hover { color: var(--text); }
 
 /* ─── READER PATHS ─── */
 .reader-paths {
@@ -723,6 +813,7 @@ img { max-width: 100%; display: block; }
   .hero { grid-template-columns: 1fr; gap: 1.6rem; }
   .hero-note { max-width: 640px; }
   .path-grid { grid-template-columns: 1fr; }
+  .book-feature-inner { grid-template-columns: 220px minmax(0, 1fr); gap: 2.5rem; }
 }
 @media (max-width: 580px) {
   .articles-grid { grid-template-columns: 1fr; }
@@ -738,8 +829,17 @@ img { max-width: 100%; display: block; }
   .reader-paths { padding: 0 1.5rem; margin-bottom: 2.4rem; }
   .divider { padding: 0 1.5rem; }
   .site-header .inner { padding: 0 1.5rem; }
-  .site-nav { gap: 1rem; }
+  .site-nav { gap: 0.7rem; }
+  .site-nav .external-site-link { display: none; }
   .article-page { padding: 2rem 1.5rem 4rem; }
+  .book-feature { padding: 3rem 1.5rem; }
+  .book-feature-inner { grid-template-columns: 1fr; }
+  .book-cover-link { width: min(68vw, 260px); }
+  .book-copy { text-align: left; }
+  .book-meta span + span::before { display: none; }
+  .hero h1, .book-copy h2 { overflow-wrap: anywhere; }
+  .hero-actions { gap: 0.55rem; }
+  .hero-btn { padding-inline: 0.85rem; }
 }
 
 /* ─── READING PROGRESS BAR ─── */
@@ -813,6 +913,10 @@ img { max-width: 100%; display: block; }
 [data-theme="dark"] .search-wrap input { background: rgba(36, 29, 24, 0.78); }
 [data-theme="dark"] .search-wrap input:focus { background: #241D18; }
 [data-theme="dark"] .site-header { background: rgba(26, 20, 16, 0.95); }
+[data-theme="dark"] .book-cover {
+  border-color: #4A382C;
+  box-shadow: 0 22px 50px rgba(0,0,0,0.34);
+}
 [data-theme="dark"] .article-card.featured {
   background: linear-gradient(135deg, #241D18 0%, #301E10 60%, #241D18 100%);
 }

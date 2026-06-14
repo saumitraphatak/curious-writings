@@ -3,7 +3,9 @@
 **Live site:** https://saumitraphatak.github.io/curious-writings/
 **Author:** Saumitra Phatak — Physics PhD candidate, Purdue University, Hood Lab
 **Source:** https://github.com/saumitraphatak/curious-writings
-**Purpose:** Personal essay blog. 12 essays across 4+ years, written by a Mumbaikar doing a Physics PhD at Purdue University. On life abroad, quantum research, identity, travel between Mumbai and West Lafayette (Indiana), and what it means to be genuinely curious about being alive.
+**Purpose:** Personal essay blog and memoir home. 13 essays across 4+ years,
+written by a Mumbaikar doing a Physics PhD at Purdue University, plus *The
+Distance Between Two Homes*, a 58-page book reshaped from the archive.
 
 ---
 
