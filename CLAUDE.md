@@ -10,7 +10,7 @@
 
 ## What This Is
 
-A personal essay blog. 12 honest essays written over 4+ years — on life abroad, a Physics PhD, identity, travel between Mumbai and Indiana, and what it means to be genuinely curious. Written in English, Marathi, and Hindi.
+A personal essay blog. 13 honest essays written over 4+ years — on life abroad, a Physics PhD, identity, travel between Mumbai and Indiana, and what it means to be genuinely curious. Written in English, Marathi, and Hindi.
 
 ---
 
@@ -31,7 +31,7 @@ curious-writings/
 ├── index.html              # GitHub Pages redirect → curious-writings.html
 ├── css/
 │   └── styles.css          # All styles (clean, serif-forward reading aesthetic)
-├── articles/               # 12 individual essay HTML files
+├── articles/               # 13 individual essay HTML files
 │   ├── 01-india-usa-travel.html
 │   ├── 02-usa-two-weeks.html
 │   ├── 03-trip-back-home.html
@@ -43,7 +43,8 @@ curious-writings/
 │   ├── 09-summer-2024.html
 │   ├── 10-ek-unhali-sahal.html     # Marathi essay
 │   ├── 11-life-quantum-physics.html
-│   └── 12-boston-experience.html
+│   ├── 12-boston-experience.html
+│   └── 13-learnings-of-education.html  # Final PhD blog
 ├── robots.txt
 └── sitemap.xml
 ```
@@ -156,6 +157,7 @@ Filter buttons: `.filter-btn[data-filter="category"]` — JS hides/shows cards b
 | 10 | 10-ek-unhali-sahal.html | एक उन्हाळी सहल | travel | Marathi | — |
 | 11 | 11-life-quantum-physics.html | Life & Quantum Physics | science | English | — |
 | 12 | 12-boston-experience.html | The Boston Experience | travel | English | — |
+| 13 | 13-learnings-of-education.html | Change Is the Only Constant | phd | English | 2025 |
 
 ---
 
