@@ -10,18 +10,34 @@
 
 ## What This Is
 
-A personal essay blog and memoir home. It includes 13 honest essays written
-over 4+ years and *The Distance Between Two Homes*, a 58-page book reshaped
-from the archive.
+Saumitra Phatak's personal essay blog and memoir home — a static website, not
+a generic content site. It includes 13 honest, first-person essays written
+over 4+ years about leaving Mumbai, doing a Physics PhD at Purdue, running
+ultracold-atom experiments, identity, family, and the back-and-forth between
+India and the US. It also hosts *The Distance Between Two Homes*, a 58-page
+memoir/book that reshapes the essay archive into one continuous story.
+
+This site is also cited from Saumitra's PhD dissertation — chapter epigraphs
+link directly to specific essay URLs (e.g. `articles/09-summer-2024.html`,
+`articles/11-life-quantum-physics.html`). Treat existing article filenames
+and URLs as stable; don't rename or move published articles without checking
+whether they're referenced externally.
+
+**Voice/intent:** conversational, reflective, sometimes funny, emotionally
+direct — essays in the original sense of "attempts," not polished memoir
+prose or advice content. Preserve the author's original voice; avoid
+over-editing into generic blog language. Three essays are in Marathi because
+some things don't translate.
 
 ---
 
 ## Tech Stack
 
-- **Pure static HTML/CSS** — minimal JS (filter bar only), no npm, no build step
-- **Google Fonts** via CDN
-- Open any `.html` file directly in browser
-- git on `main` branch
+- **Pure static HTML/CSS** — minimal JS (category filter bar, scroll-reveal, text-to-speech "Listen" button), no npm, no build step
+- Google Fonts via CDN
+- Browser's built-in `speechSynthesis` API powers the "Listen to essay" button (`js/listen.js`) — no external TTS service
+- Open any `.html` file directly in a browser to preview
+- git on `main` branch, deployed via GitHub Pages from repo root
 
 ---
 
@@ -29,26 +45,38 @@ from the archive.
 
 ```
 curious-writings/
-├── curious-writings.html   # Main index — essay card grid (THIS is the homepage, not index.html)
-├── index.html              # GitHub Pages redirect → curious-writings.html
-├── css/
-│   └── styles.css          # All styles (clean, serif-forward reading aesthetic)
-├── articles/               # 13 individual essay HTML files
-│   ├── 01-india-usa-travel.html
-│   ├── 02-usa-two-weeks.html
-│   ├── 03-trip-back-home.html
-│   ├── 04-im-confused.html
-│   ├── 05-fall-2022.html
-│   ├── 06-india-trip-2022.html
-│   ├── 07-summer-2023.html
-│   ├── 08-achievements.html
-│   ├── 09-summer-2024.html
-│   ├── 10-ek-unhali-sahal.html     # Marathi essay
-│   ├── 11-life-quantum-physics.html
-│   ├── 12-boston-experience.html
-│   └── 13-learnings-of-education.html  # Final PhD blog
+├── curious-writings.html      # Main index — essay card grid (THIS is the homepage, not index.html)
+├── index.html                 # GitHub Pages redirect → curious-writings.html
+├── CLAUDE.md                  # This file
+├── README.md                  # Human-facing project readme
+├── PROJECT_CONTEXT.md         # Short narrative-intent brief (overlaps with this file; kept for quick context)
+├── llms.txt                   # llmstxt.org-style index for LLM/RAG consumption
+├── llms-full.txt              # Full content dump (all essay summaries) for LLM/RAG consumption
 ├── robots.txt
-└── sitemap.xml
+├── sitemap.xml
+├── google8a0c77e6409e4ccc.html  # Google Search Console verification file — do not delete
+├── css/
+│   └── styles.css             # All styles (clean, serif-forward reading aesthetic)
+├── js/
+│   └── listen.js              # Injects "Listen to essay" button; uses window.speechSynthesis
+├── assets/book/
+│   ├── the-distance-between-two-homes.pdf       # Published book
+│   ├── the-distance-between-two-homes.tex       # LaTeX source
+│   └── the-distance-between-two-homes-cover.png
+└── articles/                  # 13 individual essay HTML files
+    ├── 01-india-usa-travel.html
+    ├── 02-usa-two-weeks.html
+    ├── 03-trip-back-home.html
+    ├── 04-im-confused.html
+    ├── 05-fall-2022.html
+    ├── 06-india-trip-2022.html
+    ├── 07-summer-2023.html
+    ├── 08-achievements.html
+    ├── 09-summer-2024.html
+    ├── 10-ek-unhali-sahal.html         # Marathi essay
+    ├── 11-life-quantum-physics.html
+    ├── 12-boston-experience.html
+    └── 13-learnings-of-education.html  # Most recent essay (final PhD-years reflection)
 ```
 
 **Important:** The real homepage is `curious-writings.html`, not `index.html`. The `index.html` only redirects. When editing the home page, edit `curious-writings.html`.
@@ -57,7 +85,7 @@ curious-writings/
 
 ## Essay Card Structure (in curious-writings.html)
 
-Each essay is an `<article class="article-card">` with `data-category` attribute:
+Each essay is an `<article class="article-card">` with a `data-category` attribute:
 
 ```html
 <article class="article-card reveal" data-category="journey">
@@ -77,7 +105,7 @@ Each essay is an `<article class="article-card">` with `data-category` attribute
 </article>
 ```
 
-Card #01 also has class `featured` (larger card).
+Card #01 also has the class `featured` (larger card).
 
 ---
 
@@ -99,10 +127,12 @@ Filter buttons: `.filter-btn[data-filter="category"]` — JS hides/shows cards b
 
 ## Adding a New Essay
 
-1. Create `articles/NN-essay-slug.html` (copy an existing one as template)
-2. Add `<article class="article-card reveal" data-category="...">` to `curious-writings.html`
-3. Add to `sitemap.xml` with `<loc>` and `<lastmod>`
-4. Update hero stat (`<strong>12</strong><small>Essays</small>`) if count changes
+1. Create `articles/NN-essay-slug.html` (copy an existing one as a template — see below). Use the next sequential two-digit number; never reuse or renumber existing essay numbers since they're externally linked.
+2. Add a matching `<article class="article-card reveal" data-category="...">` card to `curious-writings.html` (see structure above).
+3. Add the new page to `sitemap.xml` with `<loc>` and `<lastmod>`.
+4. Update the hero stat in `curious-writings.html` (`<strong>13</strong><small>Essays</small>`) to the new count.
+5. Add an entry to the essay table in this file, in `README.md`, and to `llms.txt` / `llms-full.txt` so LLM/RAG consumers and human readers stay in sync.
+6. `js/listen.js` auto-detects `.article-page-header` / `.article-body` on any article page — no per-article wiring needed for the "Listen" button.
 
 ---
 
@@ -137,6 +167,7 @@ Filter buttons: `.filter-btn[data-filter="category"]` — JS hides/shows cards b
       </div>
     </article>
   </main>
+  <script src="../js/listen.js"></script>
 </body>
 </html>
 ```
@@ -173,6 +204,16 @@ Filter buttons: `.filter-btn[data-filter="category"]` — JS hides/shows cards b
 
 ---
 
+## SEO / LLM-Accessibility Files
+
+- `robots.txt`, `sitemap.xml` — standard SEO
+- `llms.txt` — short llmstxt.org-spec index (title, description, essay list with one-line summaries)
+- `llms-full.txt` — fuller content dump for RAG/LLM ingestion
+- `google8a0c77e6409e4ccc.html` — Google Search Console site-ownership verification; do not delete
+- Keep `llms.txt` and `llms-full.txt` in sync whenever an essay is added, renamed, or re-categorized
+
+---
+
 ## Development Workflow
 
 ```bash
@@ -181,3 +222,12 @@ open curious-writings.html    # main page — NOT index.html
 git add -A && git commit -m "..."
 git push origin main
 ```
+
+## Known Duplicate Clone
+
+There is a second, separate clone of this same repo at
+`/Users/curious/Documents/GitHub/curious-writings`. As of this writing it is
+behind `origin/main` and has local diffs in `css/styles.css` and
+`curious-writings.html` that were never pushed. Treat `/Users/curious/curious-writings`
+as the canonical working copy; if you edit the other clone, pull/diff
+carefully before pushing to avoid clobbering changes made here.
