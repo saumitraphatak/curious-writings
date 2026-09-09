@@ -36,7 +36,7 @@ curious-writings/
 ├── curious-writings.html   # Homepage (card grid, filter bar)
 ├── index.html              # Redirect only
 ├── css/styles.css          # All styles
-├── articles/               # 12 essay HTML files
+├── articles/               # 13 essay HTML files
 │   ├── 01-india-usa-travel.html
 │   ├── 02-usa-two-weeks.html
 │   ├── 03-trip-back-home.html
@@ -48,7 +48,8 @@ curious-writings/
 │   ├── 09-summer-2024.html
 │   ├── 10-ek-unhali-sahal.html
 │   ├── 11-life-quantum-physics.html
-│   └── 12-boston-experience.html
+│   ├── 12-boston-experience.html
+│   └── 13-learnings-of-education.html
 ├── robots.txt
 └── sitemap.xml
 ```
@@ -59,18 +60,18 @@ curious-writings/
 
 ### Layout
 - `<header>` — site logo "Curious Writings", link to curious96.com
-- `.hero` — tagline "Meaningful yet unnecessary conversations"; 3 stats: 12 Essays, 4+ Years, 3 Languages
+- `.hero` — tagline "Meaningful yet unnecessary conversations"; 3 stats: 13 Essays, 4+ Years, 3 Languages
 - `.filter-bar` — filter buttons by category (All, The Journey, PhD Life, Travel & Home, Philosophy, Personal Growth, Science, मराठी)
 - `.articles-grid` — essay cards; JS shows/hides on filter click
 
 ### Hero Stats
-- 12 Essays
+- 13 Essays
 - 4+ Years of writing
 - 3 Languages (English, Marathi, Hindi)
 
 ### Filter Categories
 ```
-all        → show all 12
+all        → show all 13
 journey    → "The Journey" essays (arriving in USA, early adjustment)
 phd        → PhD Life essays (lab seasons, research milestones)
 travel     → Travel & Home (going back to Mumbai, exploring US cities)
@@ -82,7 +83,7 @@ marathi    → Essays in Marathi
 
 ---
 
-## ALL 12 ESSAYS — FULL DESCRIPTIONS
+## ALL 13 ESSAYS — FULL DESCRIPTIONS
 
 ### Essay #01 — India-USA Travel Experience
 **File:** articles/01-india-usa-travel.html
@@ -170,6 +171,13 @@ marathi    → Essays in Marathi
 
 ---
 
+### Essay #13 — Change Is the Only Constant
+**File:** articles/13-learnings-of-education.html
+**Category:** PhD Life | **Language:** English | **Year:** 2025
+**Themes:** The final PhD blog, written at the brink of graduation. Traces close to thirty years of education — Junior/Senior Kindergarten in Mulund, growing up in Thane, Mumbai University, TIFR, Purdue, and on to QuEra — and finds one pattern repeating at every transition: survival mode first, then compounding growth. Reflects on whether that much education was worth it for the experience it provided.
+
+---
+
 ## DESIGN SYSTEM
 
 ### Typography
@@ -201,4 +209,4 @@ marathi    → Essays in Marathi
 
 ---
 
-*Generated 2026-04-12 for LLM/RAG ingestion.*
+*Generated 2026-04-12, updated 2026-09-08 for LLM/RAG ingestion.*
