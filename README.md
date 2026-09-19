@@ -25,16 +25,16 @@ finished PDF and LaTeX source live in `assets/book/`.
 |---|---|---|---|---|
 | 01 | India-USA Travel Experience | The Journey | English | Aug 2021 |
 | 02 | Two Weeks in the USA | The Journey | English | — |
-| 03 | Trip Back Home | Travel & Home | English | — |
+| 03 | Trip Back Home | The Journey | English | — |
 | 04 | I'm Confused | Philosophy | English | — |
 | 05 | Fall 2022 | PhD Life | English | 2022 |
 | 06 | India Trip 2022 | Travel & Home | English | 2022 |
 | 07 | Summer 2023 | PhD Life | English | 2023 |
 | 08 | Achievements | Personal Growth | English | — |
 | 09 | Summer 2024 | PhD Life | English | 2024 |
-| 10 | एक उन्हाळी सहल | Travel & Home | Marathi | — |
+| 10 | एक उन्हाळी सहल | मराठी | Marathi | — |
 | 11 | Life & Quantum Physics | Science | English | — |
-| 12 | The Boston Experience | Travel & Home | English | — |
+| 12 | The Boston Experience | The Journey | English | — |
 | 13 | Change Is the Only Constant | PhD Life | English | 2025 |
 
 ---

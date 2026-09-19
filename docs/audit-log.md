@@ -168,3 +168,101 @@ today's pass):**
 **Not done this pass (next rotation):** formatting/rendering consistency,
 other stale content (dates/images/bio beyond the one item above), technical
 hygiene (console errors, alt text, CSS/JS refs).
+
+---
+
+## 2026-09-17 — Formatting/rendering consistency pass
+
+**Context:** Working tree was clean and up to date with `origin/main` at the
+start of this run (last commit `0e690cc`, which had already folded in the
+09-09 typo-pass fixes — thanks for committing those). No scheduled run
+appears to have happened between 2026-09-09 and today; picking the rotation
+back up at (c) formatting/rendering consistency, since links, typos, and a
+first stale-content pass were already covered.
+
+**Checked:**
+- HTML tag balance (p, div, article, header, footer, main, h1–h3, strong,
+  em, a, blockquote, span, ul/li/ol, section, nav, button) across all 13
+  articles plus `curious-writings.html` and `index.html` — all balanced
+  except the one issue below.
+- `<head>` metadata consistency across all 13 essays: `<html lang>`,
+  charset, viewport, `<title>` format, meta description, canonical URL —
+  all present and consistently formatted.
+- Essay footer nav chain (Previous/Next links) across all 13 essays —
+  confirmed the 09-09 fix for essays #11/#12 is intact and the full
+  01→13 chain is consistent (essay #1 has no "Previous," essay #13 has no
+  "Next," matching the established pattern).
+- Cross-referenced the actual `data-category` used on the homepage cards
+  and each article's own `category-tag` (the site's real, live
+  categorization) against the category columns in `CLAUDE.md`, `README.md`,
+  and `llms-full.txt`.
+
+**Fixed:**
+- `articles/09-summer-2024.html`: found one instance of a `<blockquote>`
+  nested inside a `<p>` (block element inside inline-flow content — invalid
+  HTML that browsers silently "fix" by closing the `<p>` early, same class
+  of bug as the one already known from the 09-09 pass in the other two
+  files, except those two turned out to already be correctly structured on
+  closer look — only this one was actually broken). Split it into
+  `<p>...he remarked:</p>` + standalone `<blockquote>` + `<p>Such an
+  interesting thought!...</p>`, matching the pattern already used
+  elsewhere on the site (e.g. `12-boston-experience.html`). No wording
+  changed, only the tag structure. Tag-balance re-checked after the edit.
+- Category mismatches: essays **#03**, **#10**, and **#12** are tagged
+  differently on the live site than in the docs. The site itself is
+  internally consistent (homepage card `data-category` matches each
+  article's own `category-tag` in all three cases) — it was `CLAUDE.md`,
+  `README.md`, and `llms-full.txt` that were stale:
+  - #03 "Trip Back Home": site = journey ("The Journey"), docs said
+    "travel"/"Travel & Home" — corrected all three docs.
+  - #10 "एक उन्हाळी सहल": site = marathi ("मराठी", its own dedicated filter
+    category per `llms-full.txt`'s own Filter Categories legend), docs
+    said "travel"/"Travel & Home" — corrected all three docs.
+  - #12 "The Boston Experience": site = journey ("The Journey"), docs said
+    "travel"/"Travel & Home" — corrected all three docs.
+- `llms.txt` and `llms-full.txt`: essay #12's description was a stale,
+  generic placeholder ("A trip to Boston — the city's history, the physics
+  conference...") that doesn't match the essay at all (no physics
+  conference, no Freedom Trail/Faneuil Hall/MIT/Harvard in the actual
+  text) — this was flagged as an open item back on 2026-09-09 and left for
+  a stale-content pass. Since it directly ties into today's docs/site
+  sync check and the correct content was already clearly identified (the
+  essay's own meta/OG description: first job at 28, quantum computing
+  internship, river walk, public transport, the 3am intruder story),
+  fixed both files to match.
+
+**Verified:** `git diff --stat` shows exactly 5 files touched
+(`CLAUDE.md`, `README.md`, `articles/09-summer-2024.html`, `llms-full.txt`,
+`llms.txt`), all diffs reviewed line-by-line and match the intended fixes
+above with nothing extra. Re-ran the tag-balance check on
+`09-summer-2024.html` after editing — still balanced.
+
+**Open questions / suggestions for Saumitra:**
+- No scheduled maintenance run seems to have landed between 2026-09-09 and
+  today (2026-09-17) — this audit log has no entries in between and the
+  last commit before today's is from 2026-09-11 (which was you committing
+  the 09-09 fixes, not a new automated pass). Worth checking the schedule
+  is still firing if you expected daily runs.
+- This run's connected folder was `/Users/curious/curious-writings` (the
+  canonical one per `CLAUDE.md`), consistent with the last two runs — but
+  the scheduling config for this task still references
+  `/Users/curious/Documents/GitHub/curious-writings` (the known stale
+  duplicate) as the "connected folder for context." It didn't cause a
+  problem today since the actual mount pointed at the right repo, but
+  worth updating that reference (or resolving/deleting the duplicate
+  clone) so it doesn't cause confusion later.
+- Still open from earlier passes: `llms-full.txt`'s "3 Languages (English,
+  Marathi, Hindi)" line — only essay #10 is actually in Marathi, and none
+  are in Hindi. Left untouched again pending your call on whether that's
+  intentional framing.
+- Not part of today's rotation but noticed in passing: several rows in the
+  `CLAUDE.md`/`README.md` essay tables still show "—" for the Year column
+  (essays #02, #03, #04, #08) even though the homepage cards now show
+  actual dates/seasons for these (e.g. #02 "Sep 2021", #03 "Dec 2021", #04
+  "Spring 2022", #08 "Spring 2024"). Not fixed today since it's more of a
+  stale-content sync task than formatting — good candidate for the next
+  (d) stale-content rotation.
+
+**Not done this pass (next rotation):** other stale content beyond the
+category/description fixes above (dates/images/bio), technical hygiene
+(console errors, alt text, CSS/JS refs).

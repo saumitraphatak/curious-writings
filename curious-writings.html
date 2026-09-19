@@ -533,7 +533,9 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.classList.add('active');
     activeFilter = btn.dataset.filter;
     if (document.startViewTransition) {
-      document.startViewTransition(() => doFilter());
+      const transition = document.startViewTransition(() => doFilter());
+      transition.ready.catch(() => {});
+      transition.finished.catch(() => {});
     } else {
       doFilter();
     }

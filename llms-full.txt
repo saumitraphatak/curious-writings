@@ -103,7 +103,7 @@ marathi    → Essays in Marathi
 
 ### Essay #03 — Trip Back Home
 **File:** articles/03-trip-back-home.html
-**Category:** Travel & Home | **Language:** English
+**Category:** The Journey | **Language:** English
 **Themes:** Returning to Mumbai after months away. The airport reunion. Discovering which parts of home feel exactly right and which feel slightly off — not because Mumbai changed, but because the observer did. The strange reverse culture shock of knowing your city too well to see it clearly.
 
 ---
@@ -152,7 +152,7 @@ marathi    → Essays in Marathi
 
 ### Essay #10 — एक उन्हाळी सहल (A Summer Excursion)
 **File:** articles/10-ek-unhali-sahal.html
-**Category:** Travel & Home | **Language:** Marathi
+**Category:** मराठी | **Language:** Marathi
 **About:** Written entirely in Marathi. A summer trip — possibly to a hill station or back to Maharashtra. Chosen language because the memory or experience feels rooted in Marathi — the mother tongue carrying things English cannot.
 
 ---
@@ -166,8 +166,8 @@ marathi    → Essays in Marathi
 
 ### Essay #12 — The Boston Experience
 **File:** articles/12-boston-experience.html
-**Category:** Travel & Home | **Language:** English
-**Themes:** A trip to Boston — the city's dense layering of American history (Freedom Trail, Faneuil Hall, MIT, Harvard). A physics conference in the city. The feeling of being both insider (scientist) and outsider (Indian, tourist) in the same space. Reflections on American intellectualism and its relationship to Indian academic culture.
+**Category:** The Journey | **Language:** English
+**Themes:** First job at 28, moving from Lafayette to Boston for a quantum computing internship. The river walk at sunset (Marine Drive vibes). European-style public transport that actually works. A 3am horror story with a homeless intruder, a rod, a flashlight, and drops of blood on the kitchen floor. Riding the quantum computing tide after nearly a decade as a student.
 
 ---
 
