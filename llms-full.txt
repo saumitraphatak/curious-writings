@@ -15,7 +15,7 @@ Not academic. Not advice. Not content.
 
 These are essays in the original sense — *attempts*. Attempts to make sense of what it feels like to leave Mumbai, to run experiments on ultracold atoms at 3 AM, to miss home while being fascinated by where you are, to grow up while doing a PhD. They are written in the voice you'd use with a close friend: direct, a little searching, occasionally funny.
 
-Three essays are in Marathi — because some things don't translate.
+One essay (#10) is in Marathi — because some things don't translate.
 
 ---
 
@@ -60,14 +60,14 @@ curious-writings/
 
 ### Layout
 - `<header>` — site logo "Curious Writings", link to curious96.com
-- `.hero` — tagline "Meaningful yet unnecessary conversations"; 3 stats: 13 Essays, 4+ Years, 3 Languages
+- `.hero` — tagline "Meaningful yet unnecessary conversations"; 3 stats: 1 Book, 13 Essays, 4+ Years
 - `.filter-bar` — filter buttons by category (All, The Journey, PhD Life, Travel & Home, Philosophy, Personal Growth, Science, मराठी)
 - `.articles-grid` — essay cards; JS shows/hides on filter click
 
 ### Hero Stats
+- 1 Book
 - 13 Essays
 - 4+ Years of writing
-- 3 Languages (English, Marathi, Hindi)
 
 ### Filter Categories
 ```
@@ -96,21 +96,21 @@ marathi    → Essays in Marathi
 
 ### Essay #02 — Two Weeks in the USA
 **File:** articles/02-usa-two-weeks.html
-**Category:** The Journey | **Language:** English
+**Category:** The Journey | **Language:** English | **Year:** Sep 2021
 **Themes:** First impressions of American daily life — the scale of grocery stores, highways, the quietness of suburbs compared to Mumbai. Loneliness punctuated by wonder. Learning to cook alone. The novelty of having a car culture vs. Mumbai's chaos of local trains.
 
 ---
 
 ### Essay #03 — Trip Back Home
 **File:** articles/03-trip-back-home.html
-**Category:** The Journey | **Language:** English
+**Category:** The Journey | **Language:** English | **Year:** Dec 2021
 **Themes:** Returning to Mumbai after months away. The airport reunion. Discovering which parts of home feel exactly right and which feel slightly off — not because Mumbai changed, but because the observer did. The strange reverse culture shock of knowing your city too well to see it clearly.
 
 ---
 
 ### Essay #04 — I'm Confused
 **File:** articles/04-im-confused.html
-**Category:** Philosophy | **Language:** English
+**Category:** Philosophy | **Language:** English | **Year:** Spring 2022
 **Themes:** A philosophical essay on uncertainty. Confusion as an honest state — in research (when experiments don't work), in identity (who am I becoming?), in desire (what do I actually want?). Argues that confusion is more honest than premature clarity.
 
 ---
@@ -138,7 +138,7 @@ marathi    → Essays in Marathi
 
 ### Essay #08 — Achievements
 **File:** articles/08-achievements.html
-**Category:** Personal Growth | **Language:** English
+**Category:** Personal Growth | **Language:** English | **Year:** Spring 2024
 **Themes:** What counts as achievement in a PhD? The tension between measurable progress (papers, data, presentations) and the slower, harder-to-name growth (becoming a scientist, becoming yourself). On learning to celebrate small wins. On what gets lost when you only measure by output.
 
 ---
@@ -152,21 +152,21 @@ marathi    → Essays in Marathi
 
 ### Essay #10 — एक उन्हाळी सहल (A Summer Excursion)
 **File:** articles/10-ek-unhali-sahal.html
-**Category:** मराठी | **Language:** Marathi
+**Category:** मराठी | **Language:** Marathi | **Year:** Summer 2024
 **About:** Written entirely in Marathi. A summer trip — possibly to a hill station or back to Maharashtra. Chosen language because the memory or experience feels rooted in Marathi — the mother tongue carrying things English cannot.
 
 ---
 
 ### Essay #11 — Life & Quantum Physics
 **File:** articles/11-life-quantum-physics.html
-**Category:** Science | **Language:** English
+**Category:** Science | **Language:** English | **Year:** 2025
 **Themes:** Where quantum mechanics and lived experience genuinely rhyme. Superposition as a metaphor for holding multiple identities simultaneously (Indian / American; physicist / writer; home / abroad). Measurement and collapse as analogous to the moment of commitment or decision. Wave-particle duality as the both/and of human nature. Not pop-science — written by someone who actually works with quantum systems.
 
 ---
 
 ### Essay #12 — The Boston Experience
 **File:** articles/12-boston-experience.html
-**Category:** The Journey | **Language:** English
+**Category:** The Journey | **Language:** English | **Year:** Fall 2025
 **Themes:** First job at 28, moving from Lafayette to Boston for a quantum computing internship. The river walk at sunset (Marine Drive vibes). European-style public transport that actually works. A 3am horror story with a homeless intruder, a rod, a flashlight, and drops of blood on the kitchen floor. Riding the quantum computing tide after nearly a decade as a student.
 
 ---

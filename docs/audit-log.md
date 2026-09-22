@@ -266,3 +266,192 @@ above with nothing extra. Re-ran the tag-balance check on
 **Not done this pass (next rotation):** other stale content beyond the
 category/description fixes above (dates/images/bio), technical hygiene
 (console errors, alt text, CSS/JS refs).
+
+---
+
+## 2026-09-19 — Technical hygiene pass
+
+*(Folded in from `docs/audit-note-2026-09-19.md`, written as a standalone file that day because the six tracked files below were still locally uncommitted at the time. Saumitra committed everything the same evening (commit `5d26977`, 2026-09-19 17:49), so this run is merging that entry into the main log per its own request. The sandbox can't delete files, so `docs/audit-note-2026-09-19.md` itself is still sitting in the repo — safe to delete manually now that its content lives here too.)*
+
+**Context:** `docs/audit-log.md` (and `CLAUDE.md`, `README.md`, `llms.txt`,
+`llms-full.txt`, `articles/09-summer-2024.html`) all still show uncommitted
+local changes from the 2026-09-17 formatting/rendering pass — nothing has
+been committed since `0e690cc` (2026-09-11). Per the standing instruction to
+never touch a file `git status` shows as already locally modified, this
+run skipped all six of those files entirely, **including this log itself**
+— that's why today's entry is a separate file instead of an append to
+`docs/audit-log.md`. Please fold this section in (and delete this file)
+once you've reviewed/committed the pending 09-17 diffs.
+
+Since the docs-heavy rotation slots ((d) stale content, and any further (c)
+formatting work) mostly live in the now-locked files, this run picked (e)
+technical hygiene instead — console errors, missing alt text, broken
+CSS/JS references — since it mostly touches files that were still clean.
+
+**Checked:**
+- `<img>` tags across all 13 articles, `curious-writings.html`, and
+  `index.html`: only one `<img>` on the whole site (the book cover on
+  `curious-writings.html`) and it already has descriptive `alt` text.
+- Every `<link rel="stylesheet">` / `<script src>` reference across all 13
+  articles, `curious-writings.html`, and `css/styles.css` (including the
+  Google Fonts `url()` import and the inline SVG data-URI caret) resolves
+  to a real file — nothing broken.
+- No duplicate `id` attributes on `curious-writings.html`.
+- Live console + network check (via the built-in browser, against the
+  deployed GitHub Pages site) on the homepage and an article page: page
+  loads clean, CSS/JS both 200, zero console errors on load.
+- Interactive check: clicked through the homepage's category filter
+  buttons, the search box, and the theme toggle while watching the
+  console.
+
+**Fixed:**
+- `curious-writings.html`: found a real, reproducible console error —
+  clicking two filter buttons in quick succession (well within normal
+  human click speed, reproduced with clicks 80ms apart, not just
+  synthetic rapid-fire) throws `Uncaught (in promise) InvalidStateError:
+  Transition was aborted because of invalid state`. Cause: the filter
+  click handler calls `document.startViewTransition(() => doFilter())`
+  on every click with no handling for the case where a previous
+  transition is still in flight — the browser aborts the older
+  transition and rejects its promise, and nothing was catching that
+  rejection. The filter itself still ended up showing the correct final
+  state in testing (last click wins), so this was a console-hygiene bug,
+  not a functional one. Fix: capture the returned transition and attach
+  `.catch(() => {})` to its `.ready` and `.finished` promises — this
+  purely silences the expected-when-aborted rejection and changes no
+  timing, animation, or visible behavior (verified: inline `<script>`
+  block still balances braces/parens/brackets and parses as valid JS).
+  `git diff` confirms this is the only change in the file — a 3-line
+  addition, nothing else touched.
+
+**Not fixed (flagged only):**
+- No `<link rel="icon">` anywhere on the site and no `favicon.*` file in
+  the repo root — browsers will silently 404 on the implicit
+  `/favicon.ico` request. Didn't see it surface as a console error in
+  testing (it's a network-tab 404, not a JS error), and fixing it means
+  adding a new binary asset rather than a mechanical text/code fix, so
+  left for Saumitra's call rather than done today.
+
+**Verified:** `git status` after this run shows exactly one additional
+file touched beyond the pre-existing 09-17 diffs: `curious-writings.html`.
+`git diff` on it shows only the 3-line transition fix. No local http
+server or other background process was left running on the machine
+(spun one up briefly to consider live-testing the fix, decided against
+it as unnecessary/risky, and confirmed it was killed with `pgrep`/`ps`
+before finishing).
+
+**Open questions / suggestions for Saumitra:**
+- Same note as 09-17: six files (`CLAUDE.md`, `README.md`, `llms.txt`,
+  `llms-full.txt`, `articles/09-summer-2024.html`, `docs/audit-log.md`)
+  have been sitting uncommitted since 2026-09-17 (2 days as of today).
+  Because the maintenance task is instructed never to touch a file with
+  pending local changes, this is now shrinking what each daily run can
+  safely do — today it blocked both the next stale-content rotation and
+  even logging to the normal file. Worth committing (or discarding) that
+  batch when you get a chance so the rotation can keep moving normally.
+- No favicon on the site (see above) — low priority, but a quick add
+  whenever convenient.
+- Everything else from 09-17's open-questions list (the "3 Languages"
+  claim in `llms-full.txt`, the stale Year column entries in
+  `CLAUDE.md`/`README.md` for essays #02/#03/#04/#08, the second local
+  clone at `Documents/GitHub/curious-writings`) is still open and
+  untouched — all in files this run couldn't edit anyway.
+
+**Not done this pass (next rotation):** stale content (dates/images/bio)
+and any remaining formatting work — both mostly land in the currently-locked
+docs files, so best picked up once those are committed.
+
+---
+
+## 2026-09-20 — Stale-content pass
+
+**Context:** Working tree was clean at the start of this run — Saumitra committed
+the pending 09-17/09-19 batch (commit `5d26977`, 2026-09-19 17:49), which un-blocked
+this rotation. Per the standing instruction, checked `git status`/`git log` first;
+nothing was locally modified going in. Picked up the (d) stale-content slot, which
+had been skipped twice in a row (09-17 and 09-19) because it landed in files that
+were locked both times. Also folded the standalone `docs/audit-note-2026-09-19.md`
+entry into this log above, per its own request (see note there — the file itself
+is still on disk since this sandbox can't delete it).
+
+**Checked:**
+- Cross-referenced every essay's actual publish date (`.card-lang` span on each
+  homepage card in `curious-writings.html`, e.g. "English · Sep 2021") against the
+  Year column in the essay tables in `CLAUDE.md`, `README.md`, and the
+  per-essay `**Year:**` fields in `llms-full.txt`/`llms.txt`.
+- The "Three essays are in Marathi" / "3 Languages (English, Marathi, Hindi)"
+  claim repeated across `README.md`, `CLAUDE.md`, `llms.txt`, and `llms-full.txt`
+  — flagged as an open question in three prior passes (09-08, 09-17, 09-19) but
+  never resolved. Checked it against hard evidence this time: `<html lang="...">`
+  on all 13 article files (only `articles/10-ek-unhali-sahal.html` has `lang="mr"`,
+  all 12 others are `lang="en"`), and against the essay tables in the same
+  documents, which already list only essay #10 as Marathi. The "three
+  essays"/"Hindi" claim contradicted the very tables sitting a few lines below
+  it in each file — not a framing ambiguity, an internal inconsistency.
+- The live site's actual hero stats (`curious-writings.html` `.hero-meta`:
+  "1 Book / 13 Essays / 4+ Years") against `llms-full.txt`'s documented hero
+  stats ("13 Essays, 4+ Years, 3 Languages") — the site doesn't show a
+  Languages stat at all and does show a Book count that the doc omitted;
+  `llms-full.txt` was describing a version of the hero that no longer exists.
+- Ran `sitemap.xml` past a quick recount while in the area: 16 `<loc>` entries
+  (home, main index, book PDF, 13 articles) — matches the current 13-essay
+  site exactly, nothing stale or missing. No `<lastmod>` tags are used, so
+  nothing to compare there.
+
+**Fixed:**
+- `CLAUDE.md` / `README.md`: filled in the Year column for essays #02 (Sep
+  2021), #03 (Dec 2021), #04 (Spring 2022), #08 (Spring 2024), #10 (Summer
+  2024), #11 (2025), and #12 (Fall 2025) — all were showing a placeholder
+  "—" even though the live homepage cards have had real dates for a while.
+  Values taken directly from each essay's own `.card-lang` span, no
+  interpretation involved.
+- `llms-full.txt`: added the matching `**Year:**` field to the same seven
+  essays' full-description entries (previously the field was just missing
+  for these seven, present for the other six) — brings that file in line
+  with `CLAUDE.md`/`README.md`.
+- `llms.txt`: added the matching `· <Year>` suffix to the same seven essays'
+  one-line list entries, same reasoning.
+- `README.md`, `CLAUDE.md`, `llms.txt`, `llms-full.txt`: corrected "Three
+  essays are in Marathi" → "One essay (#10) is in Marathi" (4 occurrences
+  across the 4 files) — factually only one of the 13 essays is in Marathi,
+  confirmed via `<html lang>`.
+- `llms.txt`: `**Languages:** English, Marathi, Hindi` → `**Languages:**
+  English, Marathi` — no essay is written in Hindi (the only "Hindi"
+  mention on the whole site is essay #13 saying Saumitra writes poetry in
+  Hindi as a personal aside, not an essay language).
+- `llms-full.txt`: corrected the `.hero` layout description and the "Hero
+  Stats" bullet list to match the live site — removed the nonexistent "3
+  Languages (English, Marathi, Hindi)" stat and added the "1 Book" stat
+  that's actually there (`- 1 Book`, `- 13 Essays`, `- 4+ Years of writing`).
+
+**Verified:** `git diff --stat` shows exactly 4 files touched (`CLAUDE.md`,
+`README.md`, `llms.txt`, `llms-full.txt`) — `curious-writings.html` and all
+13 article files are untouched, since this was a docs-sync pass, not a
+site-content edit. Read the full `git diff` line by line; every hunk matches
+one of the fixes above, nothing extra. Checked markdown table column counts
+in `README.md` (6) and `CLAUDE.md` (7) stayed consistent across every row
+after the sed edits. No essay prose, titles, excerpts, or voice were touched
+anywhere.
+
+**Open questions / suggestions for Saumitra:**
+- `docs/audit-note-2026-09-19.md` is now redundant (folded into this log
+  above) but this sandbox can't delete files — safe to delete manually
+  whenever convenient.
+- Still open, not touched (out of scope for a stale-content pass, needs a
+  human call): the second local clone at
+  `/Users/curious/Documents/GitHub/curious-writings` mentioned in
+  `CLAUDE.md`'s "Known Duplicate Clone" section — worth checking whether
+  it's still behind `origin/main` with unpushed diffs, and reconciling or
+  removing it if it's just stale. This run's connected folder was (again)
+  the canonical `/Users/curious/curious-writings`.
+- Still open from 09-19: no favicon on the site / no `favicon.*` file in
+  the repo root (silent 404 on the implicit `/favicon.ico` request) — low
+  priority, needs a new binary asset rather than a mechanical fix, left for
+  your call.
+- Nothing else struck me as stale while in these four files this pass —
+  contact info, bio blurbs, and the book description all read current.
+
+**Not done this pass (next rotation):** links (was last done 09-08, may be
+due for a re-check now that 09-19's technical-hygiene fix and today's docs
+edits have landed), typos (last done 09-09), formatting/rendering
+consistency (last done 09-17).

@@ -26,7 +26,7 @@ whether they're referenced externally.
 **Voice/intent:** conversational, reflective, sometimes funny, emotionally
 direct — essays in the original sense of "attempts," not polished memoir
 prose or advice content. Preserve the author's original voice; avoid
-over-editing into generic blog language. Three essays are in Marathi because
+over-editing into generic blog language. One essay (#10) is in Marathi because
 some things don't translate.
 
 ---
@@ -179,17 +179,17 @@ Filter buttons: `.filter-btn[data-filter="category"]` — JS hides/shows cards b
 | # | File | Title | Category | Language | Year |
 |---|---|---|---|---|---|
 | 01 | 01-india-usa-travel.html | India-USA Travel Experience | journey | English | Aug 2021 |
-| 02 | 02-usa-two-weeks.html | Two Weeks in the USA | journey | English | — |
-| 03 | 03-trip-back-home.html | Trip Back Home | journey | English | — |
-| 04 | 04-im-confused.html | I'm Confused | philosophy | English | — |
+| 02 | 02-usa-two-weeks.html | Two Weeks in the USA | journey | English | Sep 2021 |
+| 03 | 03-trip-back-home.html | Trip Back Home | journey | English | Dec 2021 |
+| 04 | 04-im-confused.html | I'm Confused | philosophy | English | Spring 2022 |
 | 05 | 05-fall-2022.html | Fall 2022 | phd | English | 2022 |
 | 06 | 06-india-trip-2022.html | India Trip 2022 | travel | English | 2022 |
 | 07 | 07-summer-2023.html | Summer 2023 | phd | English | 2023 |
-| 08 | 08-achievements.html | Achievements | growth | English | — |
+| 08 | 08-achievements.html | Achievements | growth | English | Spring 2024 |
 | 09 | 09-summer-2024.html | Summer 2024 | phd | English | 2024 |
-| 10 | 10-ek-unhali-sahal.html | एक उन्हाळी सहल | marathi | Marathi | — |
-| 11 | 11-life-quantum-physics.html | Life & Quantum Physics | science | English | — |
-| 12 | 12-boston-experience.html | The Boston Experience | journey | English | — |
+| 10 | 10-ek-unhali-sahal.html | एक उन्हाळी सहल | marathi | Marathi | Summer 2024 |
+| 11 | 11-life-quantum-physics.html | Life & Quantum Physics | science | English | 2025 |
+| 12 | 12-boston-experience.html | The Boston Experience | journey | English | Fall 2025 |
 | 13 | 13-learnings-of-education.html | Change Is the Only Constant | phd | English | 2025 |
 
 ---

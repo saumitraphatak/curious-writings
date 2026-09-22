@@ -24,17 +24,17 @@ finished PDF and LaTeX source live in `assets/book/`.
 | # | Title | Category | Language | Year |
 |---|---|---|---|---|
 | 01 | India-USA Travel Experience | The Journey | English | Aug 2021 |
-| 02 | Two Weeks in the USA | The Journey | English | — |
-| 03 | Trip Back Home | The Journey | English | — |
-| 04 | I'm Confused | Philosophy | English | — |
+| 02 | Two Weeks in the USA | The Journey | English | Sep 2021 |
+| 03 | Trip Back Home | The Journey | English | Dec 2021 |
+| 04 | I'm Confused | Philosophy | English | Spring 2022 |
 | 05 | Fall 2022 | PhD Life | English | 2022 |
 | 06 | India Trip 2022 | Travel & Home | English | 2022 |
 | 07 | Summer 2023 | PhD Life | English | 2023 |
-| 08 | Achievements | Personal Growth | English | — |
+| 08 | Achievements | Personal Growth | English | Spring 2024 |
 | 09 | Summer 2024 | PhD Life | English | 2024 |
-| 10 | एक उन्हाळी सहल | मराठी | Marathi | — |
-| 11 | Life & Quantum Physics | Science | English | — |
-| 12 | The Boston Experience | The Journey | English | — |
+| 10 | एक उन्हाळी सहल | मराठी | Marathi | Summer 2024 |
+| 11 | Life & Quantum Physics | Science | English | 2025 |
+| 12 | The Boston Experience | The Journey | English | Fall 2025 |
 | 13 | Change Is the Only Constant | PhD Life | English | 2025 |
 
 ---
@@ -45,7 +45,7 @@ Not academic. Not advice. Not content.
 
 These are essays in the original sense — attempts. Attempts to make sense of what it feels like to leave Mumbai, to run experiments on ultracold atoms at 3 AM, to miss home while being fascinated by where you are, to grow up while doing a PhD. They are written in the voice you'd use with a close friend: direct, a little searching, occasionally funny.
 
-Three of the essays are in Marathi — because some things don't translate.
+One of the essays (#10) is in Marathi — because some things don't translate.
 
 ---
 
