@@ -455,3 +455,131 @@ anywhere.
 due for a re-check now that 09-19's technical-hygiene fix and today's docs
 edits have landed), typos (last done 09-09), formatting/rendering
 consistency (last done 09-17).
+
+
+---
+
+## 2026-09-22 (morning run) — Links pass
+
+**Note:** originally written as a standalone file, `docs/audit-note-2026-09-22.md`,
+because `docs/audit-log.md` itself (along with `CLAUDE.md`, `README.md`, `llms.txt`,
+`llms-full.txt`) was still showing local uncommitted changes from the 09-19/09-20
+batch at the time. Saumitra committed that batch shortly afterward (commit
+`e336d71`, 2026-09-22 07:26 local), which un-blocked logging — folding the
+standalone note in here now, same treatment as the 09-19 note got on 09-20.
+
+**Context:** `git status` at the start of that run showed the same five files
+modified and uncommitted, unchanged since 09-20. No other files were locally
+modified, so the rest of the repo was fair game. Per the 09-20 entry's own
+"not done this pass" note, picked up (a) links — most overdue (full pass last
+done 09-08, with a follow-up fix on 09-09) and one of the few rotation slots
+that doesn't depend on editing any of the five locked files.
+
+**Checked:**
+- Every `href`/`src` in `index.html`, `curious-writings.html`, and all 13
+  `articles/*.html` files, resolved programmatically against the actual
+  filesystem: zero broken internal links.
+- The prev/next essay footer nav chain (`class="back-to-all"`, "Next: …"
+  links): essays #01–#12 each point to the correct next essay in sequence,
+  essay #13 correctly has no "Next" link. The #11/#12 dead-ends fixed on
+  09-09 are still holding.
+- `curious-writings.html`'s card grid / archive: all 13 essays are linked
+  at least once; none missing, none pointing to the wrong file.
+- In-page anchor links (`href="#…"`) across all files resolve to an actual
+  `id` attribute on the same page — none dangling.
+- `sitemap.xml`: still exactly 16 `<loc>` entries (home, `curious-writings.html`,
+  book PDF, 13 articles) — matches the live 13-essay site, nothing stale or
+  missing (unchanged since 09-20's count).
+- External links, spot-checked live: `curious96.com` loads fine.
+  `instagram.com/curious_poem` still can't be fetched directly (blocked by
+  Instagram's own robots.txt) — not a site-side issue, consistent with
+  09-08's finding.
+- The root `index.html` → `curious-writings.html` meta-refresh redirect: a
+  bare fetch of the root URL returns what looks like an empty page (the
+  fetch tool doesn't execute the meta-refresh), but a real browser follows
+  it instantly and `curious-writings.html` fetched directly loads with full
+  content. Same non-issue 09-08 already confirmed.
+- No stray `.git/index.lock` file.
+
+**Fixed:** nothing — no broken links found. All checks came back clean.
+
+**Open questions / suggestions for Saumitra:** the second local clone at
+`/Users/curious/Documents/GitHub/curious-writings` (see `CLAUDE.md`'s "Known
+Duplicate Clone" section) and the missing favicon are unchanged from prior
+passes, still just flags.
+
+**Not done this pass (next rotation):** typos (last done 09-09, most
+overdue after links), formatting/rendering consistency (last done 09-17),
+further stale-content/technical-hygiene follow-ups.
+
+---
+
+## 2026-09-22 (later run same day) — Typos pass
+
+**Context:** `GIT_OPTIONAL_LOCKS=0 git status` showed a clean working tree at
+the start of this run — the 09-19/09-20 batch had been committed (`e336d71`)
+before this run started, and the links pass above had already logged (as a
+standalone note, since folding it in was itself part of this run's first
+step). Per the links-pass "not done this pass" note, picked up (b) typos —
+most overdue slot (last full pass 09-09, ~13 days prior).
+
+**Checked:** read every essay's body text in full (all 13 articles,
+stripped of markup) plus the homepage card excerpts, hero copy, and story-map
+text in `curious-writings.html`, and re-read `CLAUDE.md`, `README.md`,
+`PROJECT_CONTEXT.md`, `llms.txt`, and `llms-full.txt` end to end. Also ran a
+set of automated regex sweeps across all of the above for common misspelling
+patterns (`recieve`, `seperate`, `occured`, `thier`, `definately`,
+`existance`, `government`/`goverment`, `alot`, `could/should/would of`,
+`loosing`, `wierd`, `concious`, `independant`, `priviledge`, `untill`,
+`begining`, `comming`, `runing`, `writting`, `embarass`, `accross`,
+doubled words, and a/an agreement before vowel sounds).
+
+**Fixed:** nothing this pass — both the manual read-through and the
+automated sweeps came back clean. The essay text has clearly already been
+combed for this kind of error in earlier passes (09-09 in particular); no
+genuine misspellings turned up anywhere in the 13 articles, the homepage, or
+the docs/metadata files.
+
+**Open question for Saumitra (not changed):** essay #01's essay body
+("...me and that friend from UIUC shamelessly ate thepleys sitting in front
+of the MacD...") and the matching homepage card excerpt for essay #01 in
+`curious-writings.html` ("...wore off by the time he was eating thepleys at
+McDonald's...") both use the word "thepleys." That doesn't match any English
+or transliterated Hindi/Gujarati spelling — my best guess is it was meant to
+be "theplas" (the flatbread snack), which would fit the scene (carrying
+homemade snacks and eating them at a McDonald's), but since this is your
+own essay text and I could be guessing wrong about the intended word, I've
+left it untouched rather than editing your prose on a guess. Worth a quick
+look and a manual fix if "theplas" (or something else) was intended — happy
+to make the edit next run once you confirm the correct spelling.
+
+**Also flagging (not a typo, so not touched):** essay #13 uses American
+spellings ("realize" ×2, "flavor" ×1, "socializing") while every other essay
+and all the docs consistently use British spellings elsewhere on the site
+(realise, colour, labour, recognise, licence, analyse, fulfilment,
+mannerism, savouring). Both spellings are individually "correct" so this
+isn't a misspelling I'd fix under the typos-only rule, but it's a
+site-wide-consistency question you may want to weigh in on — worth noting
+for the next formatting/consistency pass, or leave alone if this is simply
+how essay #13 was written.
+
+**Verified:** `GIT_OPTIONAL_LOCKS=0 git diff` after this run shows only the
+edits to `docs/audit-log.md` itself (folding in the standalone links-pass
+note and adding this entry) — no essay, homepage, or other doc content was
+touched, since nothing met the bar for a safe mechanical fix this pass.
+
+**Open questions / suggestions for Saumitra (carried forward, unchanged):**
+- `docs/audit-note-2026-09-19.md` and `docs/audit-note-2026-09-22.md` are
+  both now folded into this log and safe to delete manually whenever
+  convenient (this sandbox can't delete files itself).
+- The second local clone at `/Users/curious/Documents/GitHub/curious-writings`
+  (see `CLAUDE.md`'s "Known Duplicate Clone" section) — still unreconciled,
+  still just a flag.
+- No favicon on the site — still open, low priority, needs a new binary
+  asset rather than a mechanical fix.
+- New this pass: the "thepleys" spelling question above, and the
+  American/British spelling mix in essay #13, both above.
+
+**Not done this pass (next rotation):** formatting/rendering consistency
+(last done 09-17, now the most overdue slot), stale-content/technical-hygiene
+follow-ups.
