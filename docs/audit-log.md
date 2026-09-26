@@ -583,3 +583,89 @@ touched, since nothing met the bar for a safe mechanical fix this pass.
 **Not done this pass (next rotation):** formatting/rendering consistency
 (last done 09-17, now the most overdue slot), stale-content/technical-hygiene
 follow-ups.
+
+---
+
+## 2026-09-25 — Formatting/rendering consistency pass
+
+**Context:** `GIT_OPTIONAL_LOCKS=0 git status` showed only `CLAUDE.md` locally
+modified (an uncommitted doc-accuracy edit to the Essay HTML Template section,
+timestamped 2026-09-24 — not something logged by a prior run's audit-log
+entry, so presumably made but not yet committed/logged before this session
+started). Left it untouched per the standing rule not to touch files already
+locally modified; everything else in the repo was fair game. Per the 09-22
+typos-pass entry's "not done this pass" note, picked up (c) formatting/
+rendering consistency — most overdue slot (last full pass 09-17, over a week
+prior).
+
+**Checked:**
+- Structural class usage across all 13 `articles/*.html` files against the
+  template documented in `CLAUDE.md` (`site-header`, `site-nav`,
+  `article-page`, `article-page-header`, `article-back`, `article-page-meta`,
+  `category-tag`, `read-time` ×2, `article-lede`, `article-divider`,
+  `article-body`, `article-footer`, `article-footer-nav`, `back-to-all`,
+  `site-footer`, the `listen.js` script tag) plus `<html lang>`, charset,
+  viewport, canonical, description, author meta, and the newer `og:*` /
+  `twitter:*` / `application/ld+json` SEO tags — counted occurrences per file
+  programmatically. All 13 files matched on every count with two flagged-then-
+  cleared exceptions: essay #10 (Marathi) has `class="article-body devanagari"`
+  instead of bare `article-body` (CSS rule for `.article-body.devanagari`
+  exists at `css/styles.css:778` — intentional font styling, not a bug), and
+  essay #11 has two `<hr class="article-divider">` instead of one (the second
+  is a deliberate mid-essay section break before the closing reflection, not
+  a leftover duplicate).
+- Tag-balance scan (open vs. close counts) for div/article/header/footer/
+  main/nav/section/p/span/a/h1/h2/h3/ul/li/strong/em across all 13 articles
+  plus `curious-writings.html` and `index.html`: everything balanced, no
+  unclosed or mismatched tags.
+- Every CSS class referenced anywhere in the HTML (all articles + homepage +
+  index) cross-checked against `css/styles.css` definitions: no class used
+  in markup that isn't defined — no silent unstyled-element gaps.
+- `og:url` vs `canonical`, `og:title`/`twitter:title` vs `<title>`/`<h1>`,
+  and the `application/ld+json` block's `url`/`datePublished` fields, for
+  all 13 articles: no mismatches, no malformed dates.
+- Canonical URL in each article matches its actual filename exactly (no
+  copy-paste leftovers from another essay's template).
+- The one `<img>` tag on the whole site (`curious-writings.html`'s book
+  cover) has descriptive alt text.
+- Category-tag classes (`cat-journey`, `cat-phd`, etc.) cross-checked across
+  each article page, its matching homepage card, and the `CLAUDE.md` table:
+  all 13 agree.
+- `sitemap.xml`: still exactly 16 `<loc>` entries; homepage hero stat still
+  reads `13` essays — both accurate.
+- `read-time` strings on all 13 article pages: consistent `⏱ N min read` /
+  `Month Year · Essay #NN` format (essay #13 additionally has `· Final`,
+  which is intentional — it's the most recent essay).
+
+**Fixed:** nothing — no formatting or rendering inconsistencies found this
+pass. Everything checked came back clean or was an intentional, already-
+consistent design choice.
+
+**Minor observation (not touched, too trivial/interpretive to call a "fix"):**
+essay #06 is dated "Jan 2023" everywhere on the live site (homepage card,
+article page meta, ld+json `datePublished: 2023-01-01`) — internally
+consistent — but both `CLAUDE.md`'s and `README.md`'s essay tables list its
+year as "2022" (matching the trip/title "India Trip 2022", which describes a
+December 2022 trip written up the following January). Not a site bug, just a
+doc-table nuance; leaving as-is since `CLAUDE.md` is currently locally
+modified anyway and this is cosmetic.
+
+**Open questions / suggestions for Saumitra (carried forward, unchanged):**
+- `docs/audit-note-2026-09-19.md` and `docs/audit-note-2026-09-22.md` are
+  folded into this log and safe to delete manually whenever convenient.
+- `CLAUDE.md` currently has an uncommitted local edit (the Essay HTML
+  Template section, updated to document the real `og:`/`twitter:`/ld+json
+  meta tags and the site's actual `article-page` class scheme) — looks like
+  a good, accurate fix, just sitting uncommitted since around 2026-09-24.
+  Worth a `git add CLAUDE.md && git commit` whenever you're at your machine,
+  since it's currently blocking these daily runs from touching that file.
+- The second local clone at `/Users/curious/Documents/GitHub/curious-writings`
+  (see `CLAUDE.md`'s "Known Duplicate Clone" section) — still unreconciled.
+- No favicon on the site — still open, low priority.
+- The "thepleys"/"theplas" spelling question (essay #01) and the essay #13
+  American-vs-British-spelling question, both flagged 09-22 — still open,
+  no reply yet.
+
+**Not done this pass (next rotation):** stale-content/technical-hygiene
+follow-ups (last dedicated stale-content pass 09-20), links (last done
+09-22), typos (last done 09-22).

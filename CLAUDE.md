@@ -138,6 +138,12 @@ Filter buttons: `.filter-btn[data-filter="category"]` — JS hides/shows cards b
 
 ## Essay HTML Template
 
+**Note:** this reflects the actual markup/classes used in every `articles/*.html`
+file (verified against all 13 as of 2026-09-24) — earlier versions of this doc
+described a different, never-implemented class scheme (`essay`, `essay-header`,
+`essay-meta`, `essay-num`, `essay-lead`, `essay-body`); the real site has always
+used `article-page` / `article-page-header` / `article-body` etc. below.
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -146,31 +152,66 @@ Filter buttons: `.filter-btn[data-filter="category"]` — JS hides/shows cards b
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Essay Title — Curious Writings</title>
   <meta name="description" content="One-sentence description of this essay.">
+  <meta name="author" content="Saumitra Phatak">
   <link rel="canonical" href="https://saumitraphatak.github.io/curious-writings/articles/NN-slug.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Essay Title — Curious Writings">
+  <meta property="og:description" content="One-sentence description of this essay.">
+  <meta property="og:url" content="https://saumitraphatak.github.io/curious-writings/articles/NN-slug.html">
+  <meta property="og:site_name" content="Curious Writings">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Essay Title">
+  <meta name="twitter:description" content="One-sentence description of this essay.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Essay Title","description":"One-sentence description of this essay.","author":{"@type":"Person","name":"Saumitra Phatak","url":"https://www.curious96.com"},"url":"https://saumitraphatak.github.io/curious-writings/articles/NN-slug.html","datePublished":"YYYY-MM-DD","publisher":{"@type":"Person","name":"Saumitra Phatak"}}</script>
   <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-  <header class="site-header">...</header>
-  <main class="essay-main">
-    <article class="essay">
-      <header class="essay-header">
-        <div class="essay-meta">
-          <span class="essay-num">#NN</span>
-          <span class="essay-category">Category</span>
-          <span class="essay-lang">Language · Month Year</span>
-        </div>
-        <h1>Essay Title</h1>
-        <p class="essay-lead">Opening line / epigraph</p>
-      </header>
-      <div class="essay-body">
-        <p>Content paragraphs...</p>
+<header class="site-header">
+  <div class="inner">
+    <a href="../curious-writings.html" class="site-logo">Curious <span>Writings</span></a>
+    <nav class="site-nav"><a href="../curious-writings.html">← All Essays</a></nav>
+  </div>
+</header>
+<main>
+  <article class="article-page">
+    <header class="article-page-header">
+      <a href="../curious-writings.html" class="article-back">← Back to all essays</a>
+      <div class="article-page-meta">
+        <span class="category-tag cat-journey">Category</span>
+        <span class="read-time">⏱ N min read</span>
+        <span class="read-time">Month Year · Essay #NN</span>
       </div>
-    </article>
-  </main>
-  <script src="../js/listen.js"></script>
+      <h1>Essay Title</h1>
+      <p class="article-lede">Opening line / epigraph</p>
+      <hr class="article-divider">
+    </header>
+
+    <div class="article-body">
+      <p>Content paragraphs...</p>
+    </div>
+
+    <footer class="article-footer">
+      <div class="article-footer-nav">
+        <a href="PREV-slug.html">← Previous essay</a>
+      </div>
+      <a href="NEXT-slug.html" class="back-to-all">Next: Next Essay Title →</a>
+    </footer>
+  </article>
+</main>
+<footer class="site-footer">
+  <p>Written by <strong>Saumitra Phatak</strong> · <a href="../curious-writings.html">Curious Writings</a></p>
+</footer>
+<script src="../js/listen.js"></script>
 </body>
 </html>
 ```
+
+Notes on the two edge cases: essay #01 has no "Previous essay" link (its
+`article-footer-nav` div holds `← All essays` instead, linking to
+`../curious-writings.html`); essay #13 has no "Next:" link (its sibling
+link after the nav div is `← All essays` instead). The `back-to-all` class
+is reused for both the "Next: …" link and the terminal "← All essays"
+link — this is existing, intentional (if oddly named) reuse, not a bug.
 
 ---
 
